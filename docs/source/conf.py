@@ -2,9 +2,9 @@
 
 # -- Project information
 
-project = 'Lumache'
-copyright = '2021, Graziella'
-author = 'Graziella'
+project = 'SDR Setup'
+copyright = '2025, EliteArcanist'
+author = 'EliteArcanist'
 
 release = '0.1'
 version = '0.1.0'
@@ -29,7 +29,9 @@ templates_path = ['_templates']
 
 # -- Options for HTML output
 
-html_theme = 'sphinx_rtd_theme'
+import sphinx_pdj_theme
+html_theme = 'sphinx_pdj_theme'
+htm_theme_path = [sphinx_pdj_theme.get_html_theme_path()]
 
 # -- Options for EPUB output
 epub_show_urls = 'footnote'
