@@ -1,5 +1,4 @@
 # Configuration file for the Sphinx documentation builder.
-import sphinx_pdj_theme
 
 # -- Project information
 
