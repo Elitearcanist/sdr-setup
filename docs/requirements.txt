@@ -3,3 +3,4 @@ furo==2024.8.6
 
 # Linting
 rstcheck==6.2.4
+doc8==1.1.2

@@ -3,6 +3,12 @@ SDR Setup
 
 This is the documentation for setting up a few SDRs on various systems.
 
+Getting Started
+========================
+Create a new directory and clone the repository using the following command:
+.. code-block:: bash
+
+    git clone https://github.com/Elitearcanist/sdr-setup.git
 
 
 Helpful Links
