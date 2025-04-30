@@ -1,31 +1,45 @@
-Welcome to SDR Setup's documentation!
-===================================
+SDR Setup
+=====================================
 
-This project is intended to provide instructions for setting up a few SDR's on a few different platforms including Linux and Raspberry Pi.
+This project is intended to provide instructions
+for setting up a few SDR's on a few different platforms
+including Linux and Raspberry Pi.
+It also includes some examples on using an SDR for radio
+and radar applications.
 
-The project is broken down into the different SDRs used and the environments the SDRs are connected to. The tutorials are setup to explain how to setup the given environment and how to setup the SDRs to run on those environments.
-The pages are broken down to the different environments where it will explain how to set them up, and the different SDRs where it will explain how to set them up for a specific environment.
+The tutorials are organized to explain how to setup the given SDR,
+Environment or example.
 
-Software Defined Radios
------------------------
-- :doc:`limemini`
-- :doc:`limesdr`
-- :doc:`adalmpluto`
-
-Environments
-----------------------
-
-
-Check out the :doc:`usage` section for further information, including
-how to :ref:`installation` the project.
+Check out the SDR pages for how to setup
+a particular SDR on linux.
+Check out the Special Environments pages for
+setting up more unique environments.
+Check out the Examples pages for tutorials on
+a how to use an SDR for a special use case.
 
 .. caution::
-
    This project is under active development and is not complete!
 
 
+Software Defined Radios
+-----------------------
+- :doc:`/limemini`
+- :doc:`/limesdr`
+- :doc:`/adalmpluto`
+
+Special Environments
+-----------------------
+- :doc:`/raspberrypi`
+- :doc:`/gnuradio`
+
+Examples
+----------------------
+- :doc:`/examples/radio`
+- :doc:`/examples/radar`
+
+
 Contents
---------
+----------------------
 
 .. toctree::
    :maxdepth: 2
@@ -34,3 +48,9 @@ Contents
    limemini
    limesdr
    adalmpluto
+
+   raspberrypi
+   gnuradio
+
+   /examples/radio
+   /examples/radar
