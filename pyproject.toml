@@ -6,3 +6,6 @@ build-backend = "flit_core.buildapi"
 name = "sdr-setup"
 authors = [{name = "EliteArcanist", email = "andrew@jmcdfam.net"}]
 dynamic = ["version", "description"]
+
+[tool.esbonio.sphinx]
+pythonCommand = ["${env:./venv}"]
