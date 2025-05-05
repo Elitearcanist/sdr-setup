@@ -1,22 +1,56 @@
-Welcome to Lumache's documentation!
-===================================
+SDR Setup
+=====================================
 
-**Lumache** (/lu'make/) is a Python library for cooks and food lovers
-that creates recipes mixing random ingredients.
-It pulls data from the `Open Food Facts database <https://world.openfoodfacts.org/>`_
-and offers a *simple* and *intuitive* API.
+This project is intended to provide instructions
+for setting up a few SDR's on a few different platforms
+including Linux and Raspberry Pi.
+It also includes some examples on using an SDR for radio
+and radar applications.
 
-Check out the :doc:`usage` section for further information, including
-how to :ref:`installation` the project.
+The tutorials are organized to explain how to setup the given SDR,
+Environment or example.
 
-.. note::
+Check out the SDR pages for how to setup
+a particular SDR on linux.
+Check out the Special Environments pages for
+setting up more unique environments.
+Check out the Examples pages for tutorials on
+a how to use an SDR for a special use case.
 
-   This project is under active development.
+.. caution::
+   This project is under active development and is not complete!
+
+
+Software Defined Radios
+-----------------------
+- :doc:`/limemini`
+- :doc:`/limesdr`
+- :doc:`/adalmpluto`
+
+Special Environments
+-----------------------
+- :doc:`/raspberrypi`
+- :doc:`/gnuradio`
+
+Examples
+----------------------
+- :doc:`/examples/radio`
+- :doc:`/examples/radar`
+
 
 Contents
---------
+----------------------
 
 .. toctree::
+   :maxdepth: 2
 
    usage
-   api
+   limemini
+   limesdr
+   adalmpluto
+
+   raspberrypi
+   gnuradio
+
+   /examples/radio
+   /examples/radar
