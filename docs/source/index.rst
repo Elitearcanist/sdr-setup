@@ -44,7 +44,6 @@ Contents
 .. toctree::
    :maxdepth: 2
 
-   usage
    limemini
    limesdr
    adalmpluto
