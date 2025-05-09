@@ -39,8 +39,9 @@ Example
 -------
 Receiving
 
-```
-limeConfig --initialize --samplerate=20e6 --rxen=1 --rxlo=89.1e6 --rxpath=LNAW # rxlow=a local fm radio station
-limeGUI
-```
-.. image:: 
+``limeConfig --initialize --samplerate=20e6 --rxen=1 --rxlo=89.1e6 --rxpath=LNAW # rxlo=a local fm radio station``
+
+``limeGUI``
+
+.. image:: images/lime_mini_fm_fft.png
+    :width: 600 px
