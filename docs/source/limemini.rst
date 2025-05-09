@@ -34,3 +34,13 @@ Installation comes with a set of tools allowing use of the SDR, these are
 Running any of these with the ``-h`` flag will provide more information (e.g. ``limeConfig -h``).
 
 If the GUI was installed, it can be run with the command ``limeGUI``.
+
+Example
+-------
+Receiving
+
+```
+limeConfig --initialize --samplerate=20e6 --rxen=1 --rxlo=89.1e6 --rxpath=LNAW # rxlow=a local fm radio station
+limeGUI
+```
+.. image:: 
