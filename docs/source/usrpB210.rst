@@ -52,7 +52,7 @@ will accomplish this (don't forget to navigate to the repo directory):
 
 .. code-block:: console
 
-    git checkout UHD-version
+    git checkout UHD-<version>
 
 
 To build the file the Makefiles will need to be generated. Run the following:
@@ -78,4 +78,141 @@ using the following commands (this will take some time):
     make test # This step is optional
     sudo make install
 
+USB Transport (LibUSB)
+----------------------------------
+
+To communicate with the USRP Device, the computer will need a USB driver.
+
+.. code-block:: console
+
+    cd <install-path>/lib/uhd/utils
+    sudo cp uhd-usrp.rules /etc/udev/rules.d/
+    sudo udevadm control --reload-rules
+    sudo udevadm trigger
+
+
+Testing the Device
+----------------------------------
+
+USRP provides commands for testing the installation of the device drivers.
+It also identifies any connnected USRP SDRs. The command is ``uhd_usrp_probe``.
+Below is an example output to running the command while connected to a
+USRP B210. It list information about the connected device.
+
+.. code-block:: console
+
+    uhd_usrp_probe
+
+    [INFO] [UHD] linux; GNU C++ version 13.3.0; Boost_108300; UHD_4.8.0.0-0-g308126a4
+    [INFO] [B200] Loading firmware image: /usr/local/share/uhd/images/usrp_b200_fw.hex...
+    [INFO] [B200] Detected Device: B210
+    [INFO] [B200] Loading FPGA image: /usr/local/share/uhd/images/usrp_b210_fpga.bin...
+    [INFO] [B200] Operating over USB 3.
+    [INFO] [B200] Detecting internal GPSDO....
+    [INFO] [GPS] Found an internal GPSDO: GPSTCXO , Firmware Rev 0.929a
+    [INFO] [B200] Initialize CODEC control...
+    [INFO] [B200] Initialize Radio control...
+    [INFO] [B200] Performing register loopback test...
+    [INFO] [B200] Register loopback test passed
+    [INFO] [B200] Performing register loopback test...
+    [INFO] [B200] Register loopback test passed
+    [INFO] [B200] Setting master clock rate selection to 'automatic'.
+    [INFO] [B200] Asking for clock rate 16.000000 MHz...
+    [INFO] [B200] Actually got clock rate 16.000000 MHz.
+    _____________________________________________________
+    /
+    |       Device: B-Series Device
+    |     _____________________________________________________
+    |    /
+    |   |       Mboard: B210
+    |   |   serial: 312ACB8
+    |   |   name: MyB210
+    |   |   product: 2
+    |   |   revision: 4
+    |   |   FW Version: 8.0
+    |   |   FPGA Version: 16.0
+    |   |
+    |   |   Time sources:  none, internal, external, gpsdo
+    |   |   Clock sources: internal, external, gpsdo
+    |   |   Sensors: gps_gpgga, gps_gprmc, gps_time, gps_locked, gps_servo, ref_locked
+    |   |     _____________________________________________________
+    |   |    /
+    |   |   |       RX DSP: 0
+    |   |   |
+    |   |   |   Freq range: -8.000 to 8.000 MHz
+    |   |     _____________________________________________________
+    |   |    /
+    |   |   |       RX DSP: 1
+    |   |   |
+    |   |   |   Freq range: -8.000 to 8.000 MHz
+    |   |     _____________________________________________________
+    |   |    /
+    |   |   |       RX Dboard: A
+    |   |   |     _____________________________________________________
+    |   |   |    /
+    |   |   |   |       RX Frontend: A
+    |   |   |   |   Name: FE-RX2
+    |   |   |   |   Antennas: TX/RX, RX2
+    |   |   |   |   Sensors: temp, rssi, lo_locked
+    |   |   |   |   Freq range: 50.000 to 6000.000 MHz
+    |   |   |   |   Gain range PGA: 0.0 to 76.0 step 1.0 dB
+    |   |   |   |   Bandwidth range: 200000.0 to 56000000.0 step 0.0 Hz
+    |   |   |   |   Connection Type: IQ
+    |   |   |   |   Uses LO offset: No
+    |   |   |     _____________________________________________________
+    |   |   |    /
+    |   |   |   |       RX Frontend: B
+    |   |   |   |   Name: FE-RX1
+    |   |   |   |   Antennas: TX/RX, RX2
+    |   |   |   |   Sensors: temp, rssi, lo_locked
+    |   |   |   |   Freq range: 50.000 to 6000.000 MHz
+    |   |   |   |   Gain range PGA: 0.0 to 76.0 step 1.0 dB
+    |   |   |   |   Bandwidth range: 200000.0 to 56000000.0 step 0.0 Hz
+    |   |   |   |   Connection Type: IQ
+    |   |   |   |   Uses LO offset: No
+    |   |   |     _____________________________________________________
+    |   |   |    /
+    |   |   |   |       RX Codec: A
+    |   |   |   |   Name: B210 RX dual ADC
+    |   |   |   |   Gain Elements: None
+    |   |     _____________________________________________________
+    |   |    /
+    |   |   |       TX DSP: 0
+    |   |   |
+    |   |   |   Freq range: -8.000 to 8.000 MHz
+    |   |     _____________________________________________________
+    |   |    /
+    |   |   |       TX DSP: 1
+    |   |   |
+    |   |   |   Freq range: -8.000 to 8.000 MHz
+    |   |     _____________________________________________________
+    |   |    /
+    |   |   |       TX Dboard: A
+    |   |   |     _____________________________________________________
+    |   |   |    /
+    |   |   |   |       TX Frontend: A
+    |   |   |   |   Name: FE-TX2
+    |   |   |   |   Antennas: TX/RX
+    |   |   |   |   Sensors: temp, lo_locked
+    |   |   |   |   Freq range: 50.000 to 6000.000 MHz
+    |   |   |   |   Gain range PGA: 0.0 to 89.8 step 0.2 dB
+    |   |   |   |   Bandwidth range: 200000.0 to 56000000.0 step 0.0 Hz
+    |   |   |   |   Connection Type: IQ
+    |   |   |   |   Uses LO offset: No
+    |   |   |     _____________________________________________________
+    |   |   |    /
+    |   |   |   |       TX Frontend: B
+    |   |   |   |   Name: FE-TX1
+    |   |   |   |   Antennas: TX/RX
+    |   |   |   |   Sensors: temp, lo_locked
+    |   |   |   |   Freq range: 50.000 to 6000.000 MHz
+    |   |   |   |   Gain range PGA: 0.0 to 89.8 step 0.2 dB
+    |   |   |   |   Bandwidth range: 200000.0 to 56000000.0 step 0.0 Hz
+    |   |   |   |   Connection Type: IQ
+    |   |   |   |   Uses LO offset: No
+    |   |   |     _____________________________________________________
+    |   |   |    /
+    |   |   |   |       TX Codec: A
+    |   |   |   |   Name: B210 TX dual DAC
+    |   |   |   |   Gain Elements: None
 
