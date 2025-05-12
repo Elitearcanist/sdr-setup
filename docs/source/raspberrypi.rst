@@ -80,9 +80,10 @@ RealVNC pre-installed).
 
     If DragonOS does not work when booted up, try using a slightly older
     version of the OS. For example, in testing, DragonOS Beta39.1 did not load
-    the login screen, using the older version, Beta37 worked.
+    the login screen, using an older version, Beta37, worked.
 
 The default username is `ubuntu` and the password is `dragon`.
+If the computer can be logged into, then the setup is complete!
 
 .. _DragonOS: https://cemaxecuter.com/
 .. _SigintOS: https://www.sigintos.com/sigintos-2-0-community-edition/
