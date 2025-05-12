@@ -66,7 +66,7 @@ To build the file the Makefiles will need to be generated. Run the following:
 
 .. note::
 
-    The `USRP Manual <https://files.ettus.com/manual/page_build_guide.html>`_
+    The `USRP Manual`_
     gives additional direction into common bugs and install configurations.
 
 Once the build files are generated they can be built
