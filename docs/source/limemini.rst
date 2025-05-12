@@ -9,19 +9,24 @@ Additionally, a connector saver/short extension cable will make it harder to dam
 Software setup
 --------------
 The Lime mini utilizes Lime Suite for API and GUI access. 
-Either the Classic or Next Generation (NG) application can be used assuming a compatible OS, 
+Either the Classic or Next Generation (NG) application can be used assuming a compatible OS,
 however information on use will be provided for the NG application.
 
 NG
-    Installation instructions may be found at https://limesuiteng.myriadrf.org/gettingstarted/. 
-    Installing wx and then installing LimeSuiteNG from source will allow use of the GUI.
+^^
+Installation instructions may be found at https://github.com/myriadrf/LimeSuiteNG/tree/develop. 
+
+`Installing wx <https://wxwidgets.org/downloads/>`_ and then installing LimeSuiteNG from source will allow use of the GUI.
+(If installing for Linux, after downloading the source, extract the files and in the new folder navigate to docs,
+then gtk and open the install.md file for instructions).
 
 Classic
-    Installation instructions may be found at https://wiki.myriadrf.org/Lime_Suite#Installation
+^^^^^^^
+Installation instructions may be found at https://wiki.myriadrf.org/Lime_Suite#Installation
 
 Use
 ---
-Information about the tools can be found at https://github.com/myriadrf/LimeSuiteNG/tree/develop
+Information about the tools can be found at https://limesuiteng.myriadrf.org/gettingstarted/
 
 Installation comes with a set of tools allowing use of the SDR, these are
 
@@ -35,13 +40,46 @@ Running any of these with the ``-h`` flag will provide more information (e.g. ``
 
 If the GUI was installed, it can be run with the command ``limeGUI``.
 
-Example
--------
-Receiving
+Example - viewing radio frequency bands
+---------------------------------------
+An antenna supporting VHF and UHF was used for this example (connect to the RX port).
 
-``limeConfig --initialize --samplerate=20e6 --rxen=1 --rxlo=89.1e6 --rxpath=LNAW # rxlo=a local fm radio station``
+Configuration
+^^^^^^^^^^^^^
+Command line option:
 
-``limeGUI``
+``limeConfig --initialize --samplerate=20e6 --rxen=1 --rxlo=89.1e6 --rxgain=26 --rxpath=LNAW # rxlo=88e6-108e6``
 
-.. image:: images/lime_mini_fm_fft.png
+Or using limeGUI (``limeGUI``):
+
+1. Select the Lime mini from the devices dropdown.
+
+.. image:: images/LimeMini/DeviceSelection.png
+    :width: 800 px
+
+2. Turn transmission off and select the following (leave all other settings unchanged):
+    - RxAntenna: LNAW
+    - RxGain (dB): 26 (this can be adjusted down or up as desired)
+    - RxLO (MHz): 89.1 (or another frequency between 88 and 108 MHz)
+    - Enable TxA: Uncheck
+
+.. image:: images/LimeMini/GUIRadioConfig.png
+    :width: 800 px
+
+3. Press "Submit"
+
+Viewing Frequencies
+^^^^^^^^^^^^^^^^^^^
+You can identify the highest frequency of a signal on the command line with the command:
+
+``limeTRX --fft``
+
+In the GUI, you can do this by pressing modules and selecting the fftviewer.
+
+.. image:: images/LimeMini/AccessFFTViewer.png
+    :width: 600 px
+
+Press start in the new window. The output should resemble the following:
+
+.. image:: images/LimeMini/RadioFFT.png
     :width: 600 px
