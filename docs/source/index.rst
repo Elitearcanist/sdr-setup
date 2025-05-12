@@ -26,6 +26,8 @@ Software Defined Radios
 - :doc:`/limemini`
 - :doc:`/limesdr`
 - :doc:`/adalmpluto`
+- :doc:`/usrpB210`
+
 
 Special Environments
 -----------------------
@@ -47,6 +49,7 @@ Contents
    limemini
    limesdr
    adalmpluto
+   usrpB210
 
    raspberrypi
    gnuradio
