@@ -52,6 +52,7 @@ will accomplish this (don't forget to navigate to the repo directory):
 
 .. code-block:: console
 
+
     git checkout UHD-<version>
 
 
@@ -77,6 +78,7 @@ using the following commands (this will take some time):
     make
     make test # This step is optional
     sudo make install
+
 
 USB Transport (LibUSB)
 ----------------------------------
