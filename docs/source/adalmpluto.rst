@@ -62,24 +62,28 @@ Finally I select Linux-Ubuntu-22.04 for the version and click the
 link next to it. This will download the appropiate file for my system.
 Either open the file and install it in package installer or install the package
 (and its dependencies) with:
+
 .. code-block:: console
 
     sudo apt install ./[path to libiio.deb file]
 
 If you are using a newer version of Ubuntu like 24.04 you may have issues
 installing a libiio dependency libaio. The above command will output:
-``E: Package 'libaio1' has no installation candidate``
+:code:`E: Package 'libaio1' has no installation candidate`
 libaio is not designed to work with Ubuntu 24.04 in favor of other packages.
 The following is a straight foward way of resolving this issue.
+
 .. code-block:: console
 
     curl -O http://launchpadlibrarian.net/646633572/libaio1_0.3.113-4_amd64.deb
+
     sudo dpkg -i libaio1_0.3.113-4_amd64.deb
 
 Now installing libiio as before should work.
 
 
 .. tip::
+
     If the options for Type and Version appear blank, select a different OS
     option and then select the original option again.
 
@@ -95,10 +99,10 @@ AdalmSDR is correctly configured.
     iio_info -s
     iio_info -u ip:192.168.2.1
 
-``iio_info -s`` produces a list of connected devices including the Adalm Pluto.
-One of the contexts should look similar to
-``0: 192.168.2.1 (Analog Devices PlutoSDR Rev.C), ...``.
-``iio_info -u ip:192.168.2.1`` pulls info from the Adalm Pluto.
+:code:`iio_info -s` produces a list of connected devices including the
+Adalm Pluto. One of the contexts should look similar to
+:code:`0: 192.168.2.1 (Analog Devices PlutoSDR Rev.C), ...`.
+:code:`iio_info -u ip:192.168.2.1` pulls info from the Adalm Pluto.
 The command should produce something similar to:
 
 .. code-block:: console

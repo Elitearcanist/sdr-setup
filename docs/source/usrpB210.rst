@@ -82,6 +82,7 @@ USB Transport (LibUSB)
 ----------------------------------
 
 To communicate with the USRP Device, the computer will need a USB driver.
+Running the following will set the USB driver for uhd devices.
 
 .. code-block:: console
 
@@ -95,7 +96,8 @@ Testing the Device
 ----------------------------------
 
 USRP provides commands for testing the installation of the device drivers.
-It also identifies any connnected USRP SDRs. The command is ``uhd_usrp_probe``.
+It also identifies any connnected USRP SDRs.
+The command is :code:`uhd_usrp_probe`.
 Below is an example output to running the command while connected to a
 USRP B210. It list information about the connected device.
 
@@ -135,84 +137,32 @@ USRP B210. It list information about the connected device.
     |   |   Time sources:  none, internal, external, gpsdo
     |   |   Clock sources: internal, external, gpsdo
     |   |   Sensors: gps_gpgga, gps_gprmc, gps_time, gps_locked, gps_servo, ref_locked
-    |   |     _____________________________________________________
-    |   |    /
-    |   |   |       RX DSP: 0
-    |   |   |
-    |   |   |   Freq range: -8.000 to 8.000 MHz
-    |   |     _____________________________________________________
-    |   |    /
-    |   |   |       RX DSP: 1
-    |   |   |
-    |   |   |   Freq range: -8.000 to 8.000 MHz
-    |   |     _____________________________________________________
-    |   |    /
-    |   |   |       RX Dboard: A
-    |   |   |     _____________________________________________________
-    |   |   |    /
-    |   |   |   |       RX Frontend: A
-    |   |   |   |   Name: FE-RX2
-    |   |   |   |   Antennas: TX/RX, RX2
-    |   |   |   |   Sensors: temp, rssi, lo_locked
-    |   |   |   |   Freq range: 50.000 to 6000.000 MHz
-    |   |   |   |   Gain range PGA: 0.0 to 76.0 step 1.0 dB
-    |   |   |   |   Bandwidth range: 200000.0 to 56000000.0 step 0.0 Hz
-    |   |   |   |   Connection Type: IQ
-    |   |   |   |   Uses LO offset: No
-    |   |   |     _____________________________________________________
-    |   |   |    /
-    |   |   |   |       RX Frontend: B
-    |   |   |   |   Name: FE-RX1
-    |   |   |   |   Antennas: TX/RX, RX2
-    |   |   |   |   Sensors: temp, rssi, lo_locked
-    |   |   |   |   Freq range: 50.000 to 6000.000 MHz
-    |   |   |   |   Gain range PGA: 0.0 to 76.0 step 1.0 dB
-    |   |   |   |   Bandwidth range: 200000.0 to 56000000.0 step 0.0 Hz
-    |   |   |   |   Connection Type: IQ
-    |   |   |   |   Uses LO offset: No
-    |   |   |     _____________________________________________________
-    |   |   |    /
-    |   |   |   |       RX Codec: A
-    |   |   |   |   Name: B210 RX dual ADC
-    |   |   |   |   Gain Elements: None
-    |   |     _____________________________________________________
-    |   |    /
-    |   |   |       TX DSP: 0
-    |   |   |
-    |   |   |   Freq range: -8.000 to 8.000 MHz
-    |   |     _____________________________________________________
-    |   |    /
-    |   |   |       TX DSP: 1
-    |   |   |
-    |   |   |   Freq range: -8.000 to 8.000 MHz
-    |   |     _____________________________________________________
-    |   |    /
-    |   |   |       TX Dboard: A
-    |   |   |     _____________________________________________________
-    |   |   |    /
-    |   |   |   |       TX Frontend: A
-    |   |   |   |   Name: FE-TX2
-    |   |   |   |   Antennas: TX/RX
-    |   |   |   |   Sensors: temp, lo_locked
-    |   |   |   |   Freq range: 50.000 to 6000.000 MHz
-    |   |   |   |   Gain range PGA: 0.0 to 89.8 step 0.2 dB
-    |   |   |   |   Bandwidth range: 200000.0 to 56000000.0 step 0.0 Hz
-    |   |   |   |   Connection Type: IQ
-    |   |   |   |   Uses LO offset: No
-    |   |   |     _____________________________________________________
-    |   |   |    /
-    |   |   |   |       TX Frontend: B
-    |   |   |   |   Name: FE-TX1
-    |   |   |   |   Antennas: TX/RX
-    |   |   |   |   Sensors: temp, lo_locked
-    |   |   |   |   Freq range: 50.000 to 6000.000 MHz
-    |   |   |   |   Gain range PGA: 0.0 to 89.8 step 0.2 dB
-    |   |   |   |   Bandwidth range: 200000.0 to 56000000.0 step 0.0 Hz
-    |   |   |   |   Connection Type: IQ
-    |   |   |   |   Uses LO offset: No
-    |   |   |     _____________________________________________________
-    |   |   |    /
-    |   |   |   |       TX Codec: A
-    |   |   |   |   Name: B210 TX dual DAC
-    |   |   |   |   Gain Elements: None
+    ...
 
+Console FFT
+^^^^^^^^^^^^^^^^
+
+Another good and useful test available is the console FFT viewer.
+It provides a simple way to access basic FFT functionality using only
+the terminal. First navigate to the uhd examples folder.
+On a linux system it is typically located
+in :code:`/usr/local/lib/uhd/examples`.
+When the terminal is in the examples directory. The FFT can be started with:
+
+.. code-block:: console
+
+    ./rx_ascii_art_dft --freq 915e6 --rate 5e6 --gain 20 --bw 5e6 --ref-lvl -30
+
+The tags specify the traits of the FFT:
+ - :code:`--freq` specifies the center frequency. 915e6 sets it to 915 MHz.
+ - :code:`--rate` sets the sample rate.
+ - :code:`--gain` sets the gain of the receiver.
+ - :code:`--bw` sets the bandwidth, this is how wide it will scan frequencies
+   around the center frequency.
+ - :code:`--ref-lvl` is the level it will set the maximum amplitude in dBfs.
+
+Most of these can also be adjusted in the FFT window.
+
+Running the command will make an FFT in the console window!
+
+.. image:: images/usrpFFT.png
