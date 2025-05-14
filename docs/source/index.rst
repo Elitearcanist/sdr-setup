@@ -46,16 +46,10 @@ Contents
 .. toctree::
    :maxdepth: 2
 
-<<<<<<< HEAD
-   limemini
-   limesdr
-   adalmpluto
-=======
    /sdr/limemini
    /sdr/limesdr
    /sdr/adalmpluto
    /sdr/usrpB210
->>>>>>> 061b14b3a147bcbdb6d65788eaf6b73c85bbb9cd
 
    raspberrypi
    gnuradio
