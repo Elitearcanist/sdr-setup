@@ -4,7 +4,7 @@ The Adalm Pluto is a very simple SDR to use and setup.
 Analog Devices provides a very good tutorial.
 Here is a link to it: `ADALM-PLUTO Overview [Analog Devices Wiki]`_.
 This tutorial will highlight the key steps in their procedure.
-If this tutorial is lacking or missing information refer to
+If this tutorial is lacking or missing information, refer to
 Analog Devices much more detailed documentation.
 
 Setup
@@ -17,9 +17,9 @@ From their wiki:
 .. image:: images/plutoStart.png
 
 Opening the info.html file in the Pluto's storage device
-will display the next set of instructions.
-The page gives explanations the next steps, upgrading firmware,
-installing libraries and testing the installation.
+will display instructions for upgrading firmware,
+installing libraries and testing the installation. This
+tutorial summarizes those instructions.
 
 .. tip::
     Towards the bottom of the info.html page is additional information on the device
