@@ -119,4 +119,28 @@ The command should produce something similar to:
 
 If the commands produce these outputs then the Adalm Pluto is properly setup!
 
+
+SoapySDR Setup
+---------------------
+To use SoapySDR on the Adalm Pluto the correct module needs to be installed.
+The module's code can be found on their `github <https://github.com/pothosware/SoapyPlutoSDR>`_.
+Running the following will build and install the Pluto SoapySDR module.
+
+.. code-block:: console
+
+    git clone https://github.com/pothosware/SoapyPlutoSDR
+
+    cd SoapyPlutoSDR
+
+    mkdir build
+
+    cd build
+
+    cmake ..
+
+    make
+
+    sudo make install
+
+
 .. _ADALM-PLUTO Overview [Analog Devices Wiki]: https://wiki.analog.com/university/tools/pluto
