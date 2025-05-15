@@ -23,10 +23,10 @@ a how to use an SDR for a special use case.
 
 Software Defined Radios
 -----------------------
-- :doc:`/limemini`
-- :doc:`/limesdr`
-- :doc:`/adalmpluto`
-- :doc:`/usrpB210`
+- :doc:`/sdr/limemini`
+- :doc:`/sdr/limesdr`
+- :doc:`/sdr/adalmpluto`
+- :doc:`/sdr/usrpB210`
 
 
 Special Environments
@@ -46,10 +46,10 @@ Contents
 .. toctree::
    :maxdepth: 2
 
-   limemini
-   limesdr
-   adalmpluto
-   usrpB210
+   /sdr/limemini
+   /sdr/limesdr
+   /sdr/adalmpluto
+   /sdr/usrpB210
 
    raspberrypi
    gnuradio
