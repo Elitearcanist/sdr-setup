@@ -29,30 +29,29 @@ Software Defined Radios
 - :doc:`/sdr/usrpB210`
 
 
-Special Environments
+Tools
 -----------------------
-- :doc:`/raspberrypi`
+- :doc:`/tools/raspberrypi`
 - :doc:`/gnuradio`
+- :doc:`/tools/soapySDR`
 
 Examples
 ----------------------
 - :doc:`/examples/radio`
 - :doc:`/examples/radar`
 
-
-Contents
-----------------------
-
+.. probably make hidden in the future
 .. toctree::
-   :maxdepth: 2
+   :hidden:
 
    /sdr/limemini
    /sdr/limesdr
    /sdr/adalmpluto
    /sdr/usrpB210
 
-   raspberrypi
+   /tools/raspberrypi
    gnuradio
+   /tools/soapySDR
 
    /examples/radio
    /examples/radar
