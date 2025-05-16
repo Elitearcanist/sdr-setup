@@ -4,9 +4,9 @@ SoapySDR
 is a powerful tool by Pothosware. It enables most SDRs to be
 used in many programming languages such as C, C++, Python and more.
 Access to SDRs through a common library enables complex projects.
-SoapySDR will be used in all the code-based examples.
+SoapySDR_ will be used in all the code-based examples.
 
-SoapySDR has a `build guide <https://github.com/pothosware/SoapySDR/wiki/BuildGuide>`_
+SoapySDR_ has a `build guide <https://github.com/pothosware/SoapySDR/wiki/BuildGuide>`_
 for setting up the library this tutorial will walk through it for Ubuntu.
 
 Installing Dependencies
