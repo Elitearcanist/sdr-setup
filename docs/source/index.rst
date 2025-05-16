@@ -31,7 +31,7 @@ Software Defined Radios
 
 Tools
 -----------------------
-- :doc:`/raspberrypi`
+- :doc:`/tools/raspberrypi`
 - :doc:`/gnuradio`
 - :doc:`/tools/soapySDR`
 
@@ -53,7 +53,7 @@ Contents
    /sdr/adalmpluto
    /sdr/usrpB210
 
-   raspberrypi
+   /tools/raspberrypi
    gnuradio
    /tools/soapySDR
 
