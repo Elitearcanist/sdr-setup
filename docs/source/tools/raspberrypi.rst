@@ -25,7 +25,7 @@ The Imager can be `downloaded from their website <https://www.raspberrypi.com/so
 Download the Imager_ and install it.
 Once installed, the imager will look like this.
 
-.. image:: images/raspPiImager.png
+.. image:: ../images/raspberryPi/raspPiImager.png
 
 Download the latest version of DragonOS_.
 It can be `downloaded on sourceforge <https://sourceforge.net/projects/dragonos-pi64/>`_.
@@ -46,7 +46,7 @@ Then under `Storage` select a connected micro SD card.
 It will look something like this when properly configured
 (the storage device name may be different).
 
-.. image:: images/raspPiImagerReady.png
+.. image:: ../images/raspberryPi/raspPiImagerReady.png
 
 Selecting `Next` will bring a prompt to edit OS settings.
 Under OS settings the hostname, login and Wifi and more can be customized.
@@ -59,7 +59,7 @@ The imager will then write begin writing to the micro SD card.
 The process will take a few minutes but once it is done, it will display a
 message like this.
 
-.. image:: images/raspPiImageFinish.png
+.. image:: ../images/raspberryPi/raspPiImageFinish.png
 
 .. note::
 
