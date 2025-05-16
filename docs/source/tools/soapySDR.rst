@@ -80,4 +80,4 @@ cloning the repo, building the files and installing them.
 Available modules are listed on the `wiki <https://github.com/pothosware/SoapySDR/wiki#installation>`_
 a side panel shows and links to the available modules.
 
-.. image:: /images/soapySDRModules.png
+.. image:: ../images/soapySDR/soapySDRModules.png
