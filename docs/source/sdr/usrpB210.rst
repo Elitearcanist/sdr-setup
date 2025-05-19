@@ -170,4 +170,5 @@ Running the command will make an FFT in the console window!
 .. image:: ../images/usrpB210/usrpFFT.png
 
 .. steps for SoapSDR
+.. https://github.com/pothosware/SoapyUHD/wiki
 .. https://www.reddit.com/r/embedded/comments/1jhdhjc/cant_get_usrp_b210_offbrand_working_on_raspberry/
