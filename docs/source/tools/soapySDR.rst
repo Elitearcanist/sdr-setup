@@ -54,7 +54,7 @@ and the library installed.
     sudo ldconfig #needed on debian systems
     SoapySDRUtil --info
 
-If the :code:`SoapySDRUtil --info` produced an output like shown
+If the command :code:`SoapySDRUtil --info` produced an output like shown
 below then the installation is complete!
 
 .. code-block:: console
