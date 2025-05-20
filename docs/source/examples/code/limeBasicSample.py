@@ -1,3 +1,10 @@
+""" In order to get SoapySDR working it may need to be added to the site packages.
+The make command when installing SoapySDR will list where the python site package goes.
+The python path will need to be added to this, the command below can do that.
+
+export PYTHONPATH="$PYTHONPATH:/usr/local/lib/python3.12/dist-packages"
+"""
+
 import SoapySDR
 from SoapySDR import * #SOAPY_SDR_ constants
 import numpy #use numpy for buffers
@@ -8,8 +15,8 @@ for result in results: print(result)
 
 #create device instance
 #args can be user defined or from the enumeration result
-args = dict(driver="rtlsdr")
-sdr = SoapySDR.Device(args)
+args = dict(driver="uhd")
+sdr = SoapySDR.Device(results)[0]
 
 #query device info
 print(sdr.listAntennas(SOAPY_SDR_RX, 0))
