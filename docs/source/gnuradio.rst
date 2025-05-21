@@ -3,9 +3,21 @@ GNU Radio
 1. Install GNU Radio (Installation instructions at the `gnu radio wiki <https://wiki.gnuradio.org/index.php/InstallingGR>`_)
     (On Linux, ``sudo apt-get install gnuradio``)
 
-2. Install gr-limesdr
-    - On Linux, installation instructions can be found on the `github page <https://github.com/myriadrf/gr-limesdr/tree/gr-3.8>`_.
-    - On Windows, installation instructions can be found on the `older github page <https://github.com/myriadrf/gr-limesdr/>`_.
+2. Install any blocks necessary for your SDR
+    Lime devices:
+        install gr-limesdr
+            On Linux, installation instructions can be found on the `github page <https://github.com/myriadrf/gr-limesdr/tree/gr-3.8>`_.
+            On Windows, installation instructions can be found on the `older github page <https://github.com/myriadrf/gr-limesdr/>`_.
+    Adalm pluto:
+        Use of GNU radio with this SDR is not recommended. We could not successfully get the blocks and a compatible GNU radio version.
+    USRP:
+        Chances are, you have the blocks for this installed with GNU radio.
+
+        .. tip::
+
+            If building GNU radio from source (Linux), you will see instructions to install UHD before proceeding with the rest of installation.
+    RTL-SDR:
+        No software installation required.
 
 3. Ensure that your lime device is plugged in with an antenna that supports VHF
 
@@ -13,7 +25,7 @@ GNU Radio
 
 5. Open the `FM receiver example <https://github.com/myriadrf/LimeSuiteNG/blob/develop/plugins/gr-limesuiteng/examples/FM_receiver.grc>`_.
 
-6. CTRL+F "LimeSDR Source (RX)"
+6. CTRL+F "LimeSDR Source (RX)" or a source for your SDR
 
 7. Drag and drop the block into the workspace. Connect the "out" port to the "in" port of the Low Pass Filter block.
 
