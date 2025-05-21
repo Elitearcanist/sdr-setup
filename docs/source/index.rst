@@ -40,13 +40,9 @@ Examples
 - :doc:`/examples/radio`
 - :doc:`/examples/radar`
 
-
-Contents
-----------------------
-
 .. probably make hidden in the future
 .. toctree::
-   :maxdepth: 2
+   :hidden:
 
    /sdr/limemini
    /sdr/limesdr
