@@ -27,6 +27,7 @@ Software Defined Radios
 - :doc:`/sdr/limesdr`
 - :doc:`/sdr/adalmpluto`
 - :doc:`/sdr/usrpB210`
+- :doc:`/sdr/rtl-sdr`
 
 
 Special Environments
@@ -50,6 +51,7 @@ Contents
    /sdr/limesdr
    /sdr/adalmpluto
    /sdr/usrpB210
+   /sdr/rtl-sdr
 
    raspberrypi
    gnuradio
