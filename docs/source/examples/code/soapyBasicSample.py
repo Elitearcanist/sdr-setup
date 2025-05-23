@@ -9,7 +9,7 @@ for result in results:
 
 # create device instance
 # args can be user defined or from the enumeration result
-args = dict(name="LimeSDR Mini")  # this will search for a device running limesuiteng
+args = dict(name="LimeSDR Mini")  # this will search for a device named "LimeSDR Mini"
 # there are many ways of making a device, this one will return a list of devices based on the givin parameters
 sdr = SoapySDR.Device(args)[0]  # the 0 selects the first detected device
 
@@ -22,7 +22,7 @@ for freqRange in freqs:
 
 # apply settings
 sdr.setSampleRate(SOAPY_SDR_RX, 0, 1e6)
-sdr.setFrequency(SOAPY_SDR_RX, 0, 912.3e6)
+sdr.setFrequency(SOAPY_SDR_RX, 0, 912.3e6)  # set freq to 912.3 MHZ
 
 # setup a stream (complex floats)
 rxStream = sdr.setupStream(SOAPY_SDR_RX, SOAPY_SDR_CF32)
