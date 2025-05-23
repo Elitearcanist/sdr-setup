@@ -14,10 +14,13 @@ GNU Radio
         Not available on Mac. Comes with GNU Radio 3.10 on Linux, for Windows follow `these instructions <https://wiki.analog.com/resources/tools-software/linux-software/gnuradio#windows_support>`_.
     USRP:
         Chances are, you have the blocks for this installed with GNU radio.
-        If you have not downloaded the software for using USRP devices previously, you may have to do a little extra setup:
+        If you have not downloaded the software for using USRP devices
+        previously, you may have to do a little extra setup:
         ``sudo /usr/local/lib/uhd/utils/uhd_images_downloader.py``
-        This command installs the images that let it connect to the board. Once it finishes installing, you can test that it worked using the instructions on the `USRP tutorial <sdr/usrpB210.rst>`_
-        
+        This command installs the images that let it connect to the board.
+        Once it finishes installing, you can test that it worked using
+        the instructions on the `USRP tutorial <sdr/usrpB210.rst>`_
+
 
         .. tip::
 
@@ -49,21 +52,22 @@ GNU Radio
         *   - USRP
             - UHD: USRP Source
 
-7. Drag and drop the block into the workspace. Connect the "out" port to the "in" port of the Low Pass Filter block.
+7. Drag and drop the block into the workspace.
+   Connect the "out" port to the "in" port of the Low Pass Filter block.
 
 8. Configure the block:
     .. |Lime Config| image:: ./images/GNURadio/limeFMReceiver.png
         :width: 450 px
         :alt: Image displaying LimeSDR Source (RX) properties window, on general tab. RF frequency has been set to baseband*1e6, Sample rate has been set to samp_rate, and all other fields are left as defaults.
-    
-    .. |RTL-SDR Config| image:: ./images/GNURadio/rtlsdr-config.png 
+
+    .. |RTL-SDR Config| image:: ./images/GNURadio/rtlsdr-config.png
         :width: 450 px
         :alt: Soapy RTLSDR Source properties window, on RF Options tab. Center Freq (Hz) field is highlighted and has been set to baseband*1e6, and AGC has been changed to True. All other fields are default."
-    .. |Pluto Config| image:: ./images/GNURadio/pluto-config.png 
+    .. |Pluto Config| image:: ./images/GNURadio/pluto-config.png
         :width: 450 px
         :alt: PlutoSDR Source properties window, on General tab. LO Frequency has been set to int(baseband*1e6) and Sample Rate is set to int(samp_rate). All other fields are default.
 
-    .. |USRP Config| image:: ./images/GNURadio/usrpConfig.png 
+    .. |USRP Config| image:: ./images/GNURadio/usrpConfig.png
         :width: 450 px
         :alt: UHD: USRP Source properties window, on RF Options tab. Ch0: Center Freq (Hz) has been set to baseband*1e6 and Ch0: AGC has been set to Enabled
 
@@ -84,7 +88,7 @@ GNU Radio
         *   - |Lime Config|
             - |Pluto Config|
 
-    .. list-table:: 
+    .. list-table::
         :widths: 500 500
         :header-rows: 1
 
@@ -109,7 +113,8 @@ GNU Radio
         *   - |RTL-SDR Config|
             - |USRP Config|
 
-9. Press the play button and in the new window that opens, change the baseband field to an FM radio station.
+9.  Press the play button and in the new window that opens,
+    change the baseband field to an FM radio station.
 
     .. image:: ./images/GNURadio/LimeFMGraph.png
         :width: 450 px
