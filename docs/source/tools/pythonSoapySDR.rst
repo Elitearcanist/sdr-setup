@@ -1,8 +1,8 @@
 SoapySDR in Python
 ==========================
-Setting up :ref:`SoapySDR <https://github.com/pothosware/SoapySDR/wiki#using-soapysdr>`
+Setting up `SoapySDR <https://github.com/pothosware/SoapySDR/wiki>`__
 in Python is fairly simple but can have difficult to resolve problems.
-According to the :ref:`Python Support page <https://github.com/pothosware/SoapySDR/wiki/PythonSupport>`
+According to the `Python Support page <https://github.com/pothosware/SoapySDR/wiki/PythonSupport>`__
 the Python module gives acces to the C++ API, most calls are identical.
 
 Install Dependencies
@@ -25,8 +25,8 @@ Debian/Ubuntu:
 Windows+MSVC:
 """"""""""""""""
 
-Install :ref:`Windows Python <https://www.python.org/downloads/windows/>`
-and :ref:`swigwin <https://www.swig.org/download.html>` from prebuilt installers.
+Install `Windows Python <https://www.python.org/downloads/windows/>`__
+and `swigwin <https://www.swig.org/download.html>`__ from prebuilt installers.
 
 
 Basic Example
@@ -94,21 +94,25 @@ Basic Example
     :code:`/usr/local/lib/python3.12/dist-packages`
 
     There are two options (and possibly others) for fixing this:
-    1. Use sys to add it to the Python files path
-    Before the :code:`import SoapySDR` line add the following
+     1. Use sys to add it to the Python files path
+     Before the :code:`import SoapySDR` line add the following
 
-    .. code-block:: python
+        .. code-block:: python
 
-        import sys
-        sys.path.append("[/path to SoapySDR dist directory/]")
+           import sys
+           sys.path.append("/path/to/SoapySDR/dist/directory")
 
 
-    2. Add SoapySDR to the Python Path
-    The command below will add the dist-packages
-    **temporarily** (will reset on console restart) to the Python path.
+     2. Add SoapySDR to the Python Path
+     The command below will add the dist-packages
+     **temporarily** (will reset on console restart) to the Python path.
 
-    .. code-block:: console
 
-        export PYTHONPATH="$PYTHONPATH:[/path to SoapySDR dist directory/]"
+        .. code-block:: console
 
-    To make this permanent the environment file will need to be edited.
+            export PYTHONPATH="$PYTHONPATH:/path/to/SoapySDR/dist/directory"
+
+     To make this **permanent** the environment file will need to be edited.
+     On linux systems the file is in the :code:`/etc` directory.
+     Add a newline in the file pointing to the Python path:
+     :code:`PYTHONPATH=/path/to/SoapySDR/dist/directory`.
