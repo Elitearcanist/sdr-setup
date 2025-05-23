@@ -39,7 +39,7 @@ Examples
 - :doc:`/examples/radio`
 - :doc:`/examples/radar`
 
-.. probably make hidden in the future
+
 .. toctree::
    :hidden:
 
