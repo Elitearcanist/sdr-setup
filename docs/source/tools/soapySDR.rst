@@ -2,16 +2,16 @@ SoapySDR
 ==========================
 `SoapySDR <https://github.com/pothosware/SoapySDR/wiki#using-soapysdr>`__
 is a powerful tool by Pothosware. It enables most SDRs to be
-used in many programming languages such as C, C++, Python and more.
+controlled by many programming languages such as C, C++, Python and more.
 Access to SDRs through a common library enables complex projects.
 SoapySDR will be used in all the code-based examples.
 
 SoapySDR has a `build guide <https://github.com/pothosware/SoapySDR/wiki/BuildGuide>`_
-for setting up the library this tutorial will walk through it for Ubuntu.
+for setting up the library. This tutorial will walk through it for Ubuntu.
 
 Installing Dependencies
 -----------------------------
-This is a simple step, run the following commands depending on which version
+This is a simple step. Run the following commands depending on which version
 of Python you are using.
 
 Ubuntu with python2:
@@ -30,10 +30,10 @@ Ubuntu with python3:
 
 Installing the Source Code
 ------------------------------
-First a copy of the repository will be cloned onto the computer.
+Clone a copy of the repository onto the computer.
 Run this command from a directory that makes sense
 (Downloads, Documents, Home).
-The repository files can be deleted after installation.
+The repository files can be deleted after installation is finished.
 
 Clone the repository and enter the created directory:
 
@@ -42,7 +42,7 @@ Clone the repository and enter the created directory:
     git clone https://github.com/pothosware/SoapySDR.git
     cd SoapySDR
 
-Now from within the repository the files can be built
+Now from within the repository, the files can be built
 and the library installed.
 
 .. code-block:: console
@@ -74,12 +74,12 @@ Modules
 ----------------
 The Setup isn't necessarily complete! The base library does
 not include drivers for particular SDRs. To add support
-for an SDR family the correct module will need to be installed.
-The process is fairly similar to building the base library,
-cloning the repo, building the files and installing them.
+for an SDR family, the correct module will need to be installed.
+The process is fairly similar to building the base library:
+cloning the module's repository, building the files, and installing them.
 
-Available modules are listed on the `wiki, <https://github.com/pothosware/SoapySDR/wiki>`_
-a side panel shows and links to the available modules.
+Available modules are listed on the `wiki, <https://github.com/pothosware/SoapySDR/wiki>`_.
+A side panel in the document lists links to the available modules.
 
 .. image:: ../images/soapySDR/soapySDRModules.png
 
