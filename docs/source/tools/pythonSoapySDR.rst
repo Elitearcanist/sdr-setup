@@ -98,8 +98,9 @@ Basic Example
     :code:`/usr/local/lib/python3.12/dist-packages`
 
     There are two options (and possibly others) for fixing this:
-     1. Use sys to add it to the Python files path
-     Before the :code:`import SoapySDR` line add the following
+
+    1. Use sys to add it to the Python files path
+    Before the :code:`import SoapySDR` line add the following
 
         .. code-block:: python
 
@@ -107,16 +108,16 @@ Basic Example
            sys.path.append("/path/to/SoapySDR/dist/directory")
 
 
-     2. Add SoapySDR to the Python Path
-     The command below will add the dist-packages
-     **temporarily** (will reset on console restart) to the Python path.
+    2. Add SoapySDR to the Python Path
+    The command below will add the dist-packages
+    **temporarily** (will reset on console restart) to the Python path.
 
 
         .. code-block:: console
 
             export PYTHONPATH="$PYTHONPATH:/path/to/SoapySDR/dist/directory"
 
-     To make this **permanent** the environment file will need to be edited.
-     On linux systems the file is in the :code:`/etc` directory.
-     Add a newline in the file pointing to the Python path:
-     :code:`PYTHONPATH=/path/to/SoapySDR/dist/directory`.
+    To make this **permanent** the environment file will need to be edited.
+    On linux systems the file is in the :code:`/etc` directory.
+    Add a newline in the file pointing to the Python path:
+    :code:`PYTHONPATH=/path/to/SoapySDR/dist/directory`.
