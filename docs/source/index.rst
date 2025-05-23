@@ -24,7 +24,6 @@ a how to use an SDR for a special use case.
 Software Defined Radios
 -----------------------
 - :doc:`/sdr/limemini`
-- :doc:`/sdr/limesdr`
 - :doc:`/sdr/adalmpluto`
 - :doc:`/sdr/usrpB210`
 
@@ -45,7 +44,6 @@ Examples
    :hidden:
 
    /sdr/limemini
-   /sdr/limesdr
    /sdr/adalmpluto
    /sdr/usrpB210
 
