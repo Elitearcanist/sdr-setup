@@ -1,12 +1,12 @@
 SoapySDR
 ==========================
-`SoapySDR <https://github.com/pothosware/SoapySDR/wiki#using-soapysdr>`_
+`SoapySDR <https://github.com/pothosware/SoapySDR/wiki#using-soapysdr>`__
 is a powerful tool by Pothosware. It enables most SDRs to be
 used in many programming languages such as C, C++, Python and more.
 Access to SDRs through a common library enables complex projects.
-SoapySDR_ will be used in all the code-based examples.
+SoapySDR will be used in all the code-based examples.
 
-SoapySDR_ has a `build guide <https://github.com/pothosware/SoapySDR/wiki/BuildGuide>`_
+SoapySDR has a `build guide <https://github.com/pothosware/SoapySDR/wiki/BuildGuide>`_
 for setting up the library this tutorial will walk through it for Ubuntu.
 
 Installing Dependencies
@@ -36,6 +36,7 @@ Run this command from a directory that makes sense
 The repository files can be deleted after installation.
 
 Clone the repository and enter the created directory:
+
 .. code-block:: console
 
     git clone https://github.com/pothosware/SoapySDR.git
@@ -77,7 +78,11 @@ for an SDR family the correct module will need to be installed.
 The process is fairly similar to building the base library,
 cloning the repo, building the files and installing them.
 
-Available modules are listed on the `wiki <https://github.com/pothosware/SoapySDR/wiki#installation>`_
+Available modules are listed on the `wiki, <https://github.com/pothosware/SoapySDR/wiki>`_
 a side panel shows and links to the available modules.
 
 .. image:: ../images/soapySDR/soapySDRModules.png
+
+.. toctree::
+
+    /tools/pythonSoapySDR
