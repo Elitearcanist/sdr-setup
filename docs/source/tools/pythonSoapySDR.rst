@@ -40,6 +40,7 @@ Basic Example
     has been installed.
 
 .. code-block:: python
+    :caption: Example Code to Pull Samples from an SDR Device
 
     import SoapySDR
     from SoapySDR import *  # SOAPY_SDR_ constants
