@@ -156,12 +156,13 @@ When the terminal is in the examples directory. The FFT can be started with:
     ./rx_ascii_art_dft --freq 915e6 --rate 5e6 --gain 20 --bw 5e6 --ref-lvl -30
 
 The tags specify the traits of the FFT:
- - :code:`--freq` specifies the center frequency. 915e6 sets it to 915 MHz.
- - :code:`--rate` sets the sample rate.
- - :code:`--gain` sets the gain of the receiver.
- - :code:`--bw` sets the bandwidth, this is how wide it will scan frequencies
-   around the center frequency.
- - :code:`--ref-lvl` is the level it will set the maximum amplitude in dBfs.
+
+--freq      specifies the center frequency. 915e6 sets it to 915 MHz.
+-rate       sets the sample rate.
+--gain      sets the gain of the receiver.
+--bw        sets the bandwidth, this is how wide it will scan frequencies
+            around the center frequency.
+--ref-lvl   is the level it will set the maximum amplitude in dBfs.
 
 Most of these can also be adjusted in the FFT window.
 
