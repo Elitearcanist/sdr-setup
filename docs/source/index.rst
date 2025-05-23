@@ -23,16 +23,16 @@ a how to use an SDR for a special use case.
 
 Software Defined Radios
 -----------------------
-- :doc:`/limemini`
-- :doc:`/limesdr`
-- :doc:`/adalmpluto`
-- :doc:`/usrpB210`
+- :doc:`/sdr/limemini`
+- :doc:`/sdr/adalmpluto`
+- :doc:`/sdr/usrpB210`
 
 
-Special Environments
+Tools
 -----------------------
-- :doc:`/raspberrypi`
+- :doc:`/tools/raspberrypi`
 - :doc:`/gnuradio`
+- :doc:`/tools/soapySDR`
 
 Examples
 ----------------------
@@ -40,19 +40,16 @@ Examples
 - :doc:`/examples/radar`
 
 
-Contents
-----------------------
-
 .. toctree::
-   :maxdepth: 2
+   :hidden:
 
    /sdr/limemini
-   /sdr/limesdr
    /sdr/adalmpluto
    /sdr/usrpB210
 
-   raspberrypi
+   /tools/raspberrypi
    gnuradio
+   /tools/soapySDR
 
    /examples/radio
    /examples/radar
