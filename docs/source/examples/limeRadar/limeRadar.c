@@ -1,5 +1,5 @@
 /*
-Written by Levi Powell, August 2023
+Written by Levi Powell with edits from Andrew McDonald, August 2023 updated July 2025
 This code implements a basic radar using the LimeSDR Mini SDR.
 
 Compile with: gcc -std=c99 limeRadar.c -lSoapySDR -lm -o limeRadar.out
@@ -21,7 +21,7 @@ Compile with speed optimization (recommended): gcc -std=c99 limeRadar.c -lSoapyS
 #include <SoapySDR/Constants.h>
 
 
-//User configuration constants
+/////////// User configuration constants ///////////
 #define FREQUENCY 3e9                 //The carrier frequency (Hz)
 #define CLOCK_RATE 100e6                //SDR internal clock rate (Hz)
 #define SAMPLE_RATE_TX 25e6             //SDR sample rate (Hz)
@@ -31,24 +31,20 @@ Compile with speed optimization (recommended): gcc -std=c99 limeRadar.c -lSoapyS
 #define SAVE_TO_FILE true               //Save data to file or print to screen
 
 
-//Other constants
+///// Other constants /////
 // Note: if the zero delay is off from the actual delay inside the FPGA then the feedthough will not be centered in the FFT
-#define ZERO_DELAY_SAMPLES 80               //Constant internal latency correction, orignially 96
+#define ZERO_DELAY_SAMPLES 96               // Constant internal latency correction, orignially 96
 
-#define BANDWIDTH_TX 50e6                   //Bandwidth of frontend filters
-#define BANDWIDTH_RX 50e6                   //Bandwidth of frontend filters
-
-
-// #define BUFF_TX_LENGTH (size_t) 1e3         //Length of buffer sent to SDR
-// #define BUFF_RX_LENGTH (size_t) 1e3         //Length of buffer received from SDR
+#define BANDWIDTH_TX 50e6                   // Bandwidth of frontend filters
+#define BANDWIDTH_RX 50e6                   // Bandwidth of frontend filters
 
 // Note: the target length will be achieved by using the getSreamMTU length and using MTUs until the target is achieved
 // an additional buffer is added to be trimmed later to remove trailing zeros
-#define CONTIGUOUS_BUFF_TX_LENGTH_TARGET (int) 5e4 // Target Length of a single chirp will be slightly larger
-#define CONTIGUOUS_BUFF_RX_LENGTH_TARGET (int) 5e4 // Target Length of a single chirp
+#define CONTIGUOUS_BUFF_TX_LENGTH_TARGET (int) 1e5 // Target Length of a single chirp will be slightly larger
+#define CONTIGUOUS_BUFF_RX_LENGTH_TARGET (int) 1e5 // Target Length of a single chirp
 
-#define CHANNEL_TX 0                        //SDR channel
-#define CHANNEL_RX 0                        //SDR channel
+#define CHANNEL_TX 0                        // SDR channel
+#define CHANNEL_RX 0                        // SDR channel
 
 #define STREAM_TIMEOUT_TX .1e6               //Stream timeout (microseconds)
 #define STREAM_TIMEOUT_RX .1e6               //Stream timeout (microseconds)

@@ -185,8 +185,8 @@ if intData:
     vmaxF = '20'
     vminF = '-20'
 else:
-    vmaxT = '0.1'
-    vminT = '-0.1'
+    vmaxT = '0.05'
+    vminT = '-0.05'
     vmaxF = '20'
     vminF = '-20'
 
