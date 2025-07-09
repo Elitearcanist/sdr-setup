@@ -53,7 +53,8 @@ Compile with speed optimization (recommended): gcc -std=c99 limeRadar.c -lSoapyS
 
 #define CHIRP_BANDWIDTH SAMPLE_RATE_RX      //Bandwidth of a chirp
 
-#define GAIN 50 // Default is 50
+#define GAIN 52 // Default is 50 max is 52
+#define RX_GAIN 20 // Default was 20
 
 #define PI 3.1415926535
 
@@ -372,7 +373,7 @@ void SetParameters(SoapySDRDevice* sdr)
     {
         printf("[SetParameters] Rx setAntenna fail: %s\n", SoapySDRDevice_lastError());
     }
-    if (SoapySDRDevice_setGain(sdr, SOAPY_SDR_RX, CHANNEL_RX, 20) != 0)
+    if (SoapySDRDevice_setGain(sdr, SOAPY_SDR_RX, CHANNEL_RX, RX_GAIN) != 0)
     {
         printf("[SetParameters] Rx setGain fail: %s\n", SoapySDRDevice_lastError());
     }
@@ -461,7 +462,7 @@ void SaveData(FILE* fp, int* sampleNumber, const complex float* buffer, const in
 
 void FillBuffer(complex float* buff, size_t length, size_t contBufferTxLength, size_t bufferTxLength)
 {
-    printf("[Fill Buffer] Started filling buffer\n");
+    printf("[Fill Buffer] Filling buffer\n");
 
     float amplitude = 1; //Center to peak
     size_t period = bufferTxLength; //Number of samples
@@ -525,8 +526,6 @@ void TransmitReceive(SoapySDRDevice* sdr, SoapySDRStream* txStream, SoapySDRStre
         printf("[TransmitReceive] Activate Rx stream fail: %s\n", SoapySDRDevice_lastError());
     }
 
-    printf("started transmit\n");
-
     //Begin transmitting
     int txStreamStatus;
     for(int i = 0; i < contBufferTxLength / bufferTxLength; i++)
@@ -541,8 +540,6 @@ void TransmitReceive(SoapySDRDevice* sdr, SoapySDRStream* txStream, SoapySDRStre
             printf("[TransmitReceive] Write stream failed: %d\n", txStreamStatus);
         }
     }
-
-    printf("started recieve\n");
     
     //Begin receiving
     int rxStreamStatus;

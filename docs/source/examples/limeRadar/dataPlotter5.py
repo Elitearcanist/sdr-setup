@@ -185,8 +185,8 @@ if intData:
     vmaxF = '20'
     vminF = '-20'
 else:
-    vmaxT = '0.05'
-    vminT = '-0.05'
+    vmaxT = '0.01'
+    vminT = '-0.01'
     vmaxF = '20'
     vminF = '-20'
 
@@ -198,7 +198,7 @@ plt.figure(1)
 # Plot the two received signals (before subtraction)
 plt.subplot(subplot1+1)
 # plt.subplot(221)
-plt.title('Dataset 1')
+plt.title('Null Data')
 if lockAxis:
     plot = plt.matshow(realMatrix, cmap='hot', vmax=vmaxT, vmin=vminT, aspect="auto", fignum=False)
 else:
@@ -208,7 +208,7 @@ plt.xlabel('Sample Number')
 plt.ylabel('Chirp Number')
 
 plt.subplot(subplot1+2)
-plt.title('Dataset 2')
+plt.title('Sample Data')
 if lockAxis:
     plot = plt.matshow(realMatrix2, cmap='hot', vmax=vmaxT, vmin=vminT, aspect="auto", fignum=False)
 else:
