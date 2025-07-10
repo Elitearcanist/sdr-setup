@@ -27,9 +27,9 @@ adding -L /usr/local/lib to the compile command helped it find the correct Soapy
 /////////// User configuration constants ///////////
 #define FREQUENCY 3e9                // The carrier frequency (Hz)
 #define CLOCK_RATE 100e6             // SDR internal clock rate (Hz)
-#define SAMPLE_RATE_TX 30e6          // SDR sample rate (Hz)
-#define SAMPLE_RATE_RX 30e6          // SDR sample rate (Hz)
-#define NUM_CHIRPS 50                // Number of chirps to be transmitted
+#define SAMPLE_RATE_TX 28e6          // SDR sample rate (Hz)
+#define SAMPLE_RATE_RX 28e6          // SDR sample rate (Hz)
+#define NUM_CHIRPS 20                // Number of chirps to be transmitted
 #define CHIRP_DELAY (long long)0.2e9 // Time from start of one chirp to start of next chirp (nanoseconds)
 #define SAVE_TO_FILE true            // Save data to file or print to screen
 
@@ -42,8 +42,8 @@ adding -L /usr/local/lib to the compile command helped it find the correct Soapy
 
 // Note: the target length will be achieved by using the getSreamMTU length and using MTUs until the target is achieved
 // an additional buffer is added to be trimmed later to remove trailing zeros
-#define CONTIGUOUS_BUFF_TX_LENGTH_TARGET (int)1e5 // Target Length of a single chirp will be slightly larger
-#define CONTIGUOUS_BUFF_RX_LENGTH_TARGET (int)1e5 // Target Length of a single chirp
+#define CONTIGUOUS_BUFF_TX_LENGTH_TARGET (int)1e6 // Target Length of a single chirp will be slightly larger
+#define CONTIGUOUS_BUFF_RX_LENGTH_TARGET (int)1e6 // Target Length of a single chirp
 
 #define CHANNEL_TX 0 // SDR channel
 #define CHANNEL_RX 0 // SDR channel
@@ -55,8 +55,8 @@ adding -L /usr/local/lib to the compile command helped it find the correct Soapy
 
 #define CHIRP_BANDWIDTH SAMPLE_RATE_RX // Bandwidth of a chirp
 
-#define GAIN 50    // Default is 50 max is 52
-#define RX_GAIN 20 // Default was 20
+#define GAIN 52    // Default is 50 max is 52
+#define RX_GAIN 30 // Default was 20
 
 #define PI 3.1415926535
 
@@ -454,41 +454,20 @@ void FillBuffer(complex float *buff, size_t length, size_t contBufferTxLength, s
 {
     printf("[Fill Buffer] Filling buffer\n");
 
-    float amplitude = 1;            // Center to peak
-    size_t period = bufferTxLength; // Number of samples
+    // Chirp Constants
+    float chirpsPerSec = ((float)SAMPLE_RATE_TX) / contBufferTxLength; // Enough to have one chirp in the contiguous buffer.
+    int chirpStartFreq = 0;
+    int chirpEndFreq = CHIRP_BANDWIDTH;
+    double chirpSlope = (chirpEndFreq - chirpStartFreq) * chirpsPerSec;
+
+    printf("Chirp data:\n chirps per second: %f, chip slope %lf\n", chirpsPerSec, chirpSlope);
+
+    // Generate the up-chirp
     for (int i = 0; i < length; i++)
     {
-        // Square wave
-        //  buff[i] = (i % period < period/2) ? amplitude*(1 + 1*I) : amplitude*(-1 + -1*I);
-
-        // Continuous wave
-        //  buff[i] = amplitude*(1 + 1*I);
-
-        // Sawtooth wave
-        //  buff[i] = amplitude*(2*(i % period) / (float)period - 1)*(1 + 1*I);
-
-        // Sine wave
-        //  buff[i] = amplitude*cos(2*PI*i/period) + amplitude*sin(2*PI*i/period)*I;
-
-        // Chirp
-        //  int chirpsPerSec = 10;
-        float chirpsPerSec = ((float)SAMPLE_RATE_TX) / contBufferTxLength; // Enough to have one chirp in the contiguous buffer.
-        int chirpStartFreq = 0;
-        int chirpEndFreq = CHIRP_BANDWIDTH;
         double time = i / SAMPLE_RATE_TX;
-        double chirpSlope = (chirpEndFreq - chirpStartFreq) * chirpsPerSec;
         const double angle = (2 * PI * time) * (chirpStartFreq + time * chirpSlope / 2);
         buff[i] = cos(angle) + sin(angle) * I;
-
-        // Impulse
-        //  if(i == length / 2)
-        //  {
-        //      buff[i] = 1+1*I;
-        //  }
-        //  else
-        //  {
-        //      buff[i] = 0+0*I;
-        //  }
     }
 }
 
