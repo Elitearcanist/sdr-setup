@@ -1,4 +1,4 @@
-# Written by Levi Powell, August 2023
+# Written by Levi Powell, August 2023, edited by Andrew McDonald July 2025
 # This code plots the data saved by the SDR
 
 
@@ -9,10 +9,10 @@ import numpy as np
 from numpy.fft import fft
 from numpy.fft import fftshift
 
-f_config_name = "config.txt"
-f_data_name = "data.bin"
-f_nulldata_name = "nulldata.bin"
-window = True  # apply a hanning window to the data
+f_config_name = "radarConfig.txt"
+f_data_name = "radarData.bin"
+f_nulldata_name = "radarNullData.bin"
+window = True  # apply a hanning window to the data, the FFT won't work without a window applied!
 fftLength = 100
 intData = False
 lockAxis = True  # Sets axis to fixed values

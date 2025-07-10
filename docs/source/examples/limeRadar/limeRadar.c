@@ -27,10 +27,10 @@ adding -L /usr/local/lib to the compile command helped it find the correct Soapy
 /////////// User configuration constants ///////////
 #define FREQUENCY 3e9                // The carrier frequency (Hz)
 #define CLOCK_RATE 100e6             // SDR internal clock rate (Hz)
-#define SAMPLE_RATE_TX 28e6          // SDR sample rate (Hz)
-#define SAMPLE_RATE_RX 28e6          // SDR sample rate (Hz)
+#define SAMPLE_RATE_TX 29e6          // SDR sample rate (Hz)
+#define SAMPLE_RATE_RX 29e6          // SDR sample rate (Hz)
 #define NUM_CHIRPS 20                // Number of chirps to be transmitted
-#define CHIRP_DELAY (long long)0.2e9 // Time from start of one chirp to start of next chirp (nanoseconds)
+#define CHIRP_DELAY (long long)0.1e9 // Time from start of one chirp to start of next chirp (nanoseconds)
 #define SAVE_TO_FILE true            // Save data to file or print to screen
 
 ///// Other constants /////
@@ -48,10 +48,10 @@ adding -L /usr/local/lib to the compile command helped it find the correct Soapy
 #define CHANNEL_TX 0 // SDR channel
 #define CHANNEL_RX 0 // SDR channel
 
-#define STREAM_TIMEOUT_TX .1e6                            // Stream timeout (microseconds)
-#define STREAM_TIMEOUT_RX .1e6                            // Stream timeout (microseconds)
-#define FLAGS_TX SOAPY_SDR_HAS_TIME | SOAPY_SDR_END_BURST // Stream configuration flags
-#define FLAGS_RX SOAPY_SDR_HAS_TIME | SOAPY_SDR_END_BURST // Stream configuration flags
+#define STREAM_TIMEOUT_TX .1e6                             // Stream timeout (microseconds)
+#define STREAM_TIMEOUT_RX .1e6                             // Stream timeout (microseconds)
+#define FLAGS SOAPY_SDR_HAS_TIME                           // Stream configuration flags
+#define FLAGS_END SOAPY_SDR_HAS_TIME | SOAPY_SDR_END_BURST // Flags for final transmission
 
 #define CHIRP_BANDWIDTH SAMPLE_RATE_RX // Bandwidth of a chirp
 
@@ -78,9 +78,9 @@ int main()
     FILE *fp_config;
     FILE *fp_data;
     FILE *fp_nulldata;
-    fp_config = fopen("config.txt", "w");
-    fp_data = fopen("data.bin", "wb");
-    fp_nulldata = fopen("nulldata.bin", "wb");
+    fp_config = fopen("radarConfig.txt", "w");
+    fp_data = fopen("radarData.bin", "wb");
+    fp_nulldata = fopen("radarNullData.bin", "wb");
     int sampleNumber = 0;
 
     // Setup SDR
@@ -136,7 +136,7 @@ int main()
         fprintf(fp_config, "%d,%d,%d,%d,%d\n", (int)SAMPLE_RATE_RX, (int)CHIRP_BANDWIDTH, (int)contBufferRxSaveLength, (int)NUM_CHIRPS, (int)CHIRP_DELAY);
     }
 
-    // A buffer to hold the mixed data
+    // Allocate a buffer to hold the mixed data
     complex float *mixedSignal = malloc(2 * sizeof(float) * contBufferRxLength);
 
     // Fill Tx buffer with data to transmit
@@ -249,8 +249,6 @@ int main()
     free(contBufferRx);
 
     printf("Closing streams...\n");
-    SoapySDRDevice_deactivateStream(sdr, txStream, 0, 0);
-    SoapySDRDevice_deactivateStream(sdr, rxStream, 0, 0);
     SoapySDRDevice_closeStream(sdr, txStream);
     SoapySDRDevice_closeStream(sdr, rxStream);
     SoapySDRDevice_unmake(sdr);
@@ -483,7 +481,7 @@ void TransmitReceive(SoapySDRDevice *sdr, SoapySDRStream *txStream, SoapySDRStre
     long long firstRxTimestamp = -1;
 
     // Activate streams
-    int flags = FLAGS_TX;
+    int flags = FLAGS;
     if (SoapySDRDevice_activateStream(sdr, txStream, flags, transmitTime, 0) != 0)
     {
         printf("[TransmitReceive] Activate Tx stream fail: %s\n", SoapySDRDevice_lastError());
@@ -497,6 +495,12 @@ void TransmitReceive(SoapySDRDevice *sdr, SoapySDRStream *txStream, SoapySDRStre
     int txStreamStatus;
     for (int i = 0; i < contBufferTxLength / bufferTxLength; i++)
     {
+        // If it is the last transmission change flags to empty buffer
+        if (i == contBufferTxLength / bufferTxLength)
+        {
+            flags = FLAGS_END;
+        }
+
         buffsTx[0] = bufferTx;
         txStreamStatus = SoapySDRDevice_writeStream(sdr, txStream, buffsTx, bufferTxLength, &flags, transmitTime, STREAM_TIMEOUT_TX);
         transmitTime += bufferTxLength / SAMPLE_RATE_TX * 1e9; // Begin next transmission immediately after this one finishes.
@@ -508,10 +512,18 @@ void TransmitReceive(SoapySDRDevice *sdr, SoapySDRStream *txStream, SoapySDRStre
         }
     }
 
+    flags = FLAGS; // Set flags back to default
+
     // Begin receiving
     int rxStreamStatus;
     for (int i = 0; i < contBufferRxLength / bufferRxLength; i++)
     {
+        // If it is the last transmission change flags to empty buffer
+        if (i == contBufferRxLength / bufferRxLength)
+        {
+            flags = FLAGS_END;
+        }
+
         buffsRx[0] = bufferRx;
         rxStreamStatus = SoapySDRDevice_readStream(sdr, rxStream, buffsRx, bufferRxLength, &flags, &timestampRx, STREAM_TIMEOUT_RX);
         bufferRx += bufferRxLength; // Move buffer pointer to the next section of the contiguous buffer to be received.

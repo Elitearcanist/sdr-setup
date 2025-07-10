@@ -1,7 +1,7 @@
 # Output files (for examples like limeRadar)
 *.out
 *.bin
-config.txt
+radarConfig.txt
 
 
 # Created by https://www.toptal.com/developers/gitignore/api/python,jupyternotebooks
