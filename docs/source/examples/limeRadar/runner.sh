@@ -11,7 +11,7 @@ BLU='\033[0;34m'    # Blue
 NC='\033[0m'        # No Color
 
 echo $YEL[RUNNER] Compiling $CODE_FILE ...$NC
-gcc -std=c99 $CODE_FILE -lSoapySDR -lm -Ofast -o $EXE_FILE
+gcc -std=c99 $CODE_FILE -lSoapySDR -lm -Ofast -o $EXE_FILE -L /usr/local/lib
 
 echo $YEL[RUNNER] Executing $EXE_FILE ...$NC
 ./$EXE_FILE
