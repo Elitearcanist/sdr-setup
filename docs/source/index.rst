@@ -37,7 +37,7 @@ Tools
 Examples
 ----------------------
 - :doc:`/examples/radio`
-- :doc:`/examples/radar`
+- :doc:`/examples/limeRadar`
 
 
 .. toctree::
@@ -52,4 +52,4 @@ Examples
    /tools/soapySDR
 
    /examples/radio
-   /examples/radar
+   /examples/limeRadar
