@@ -26,6 +26,7 @@ Software Defined Radios
 - :doc:`/sdr/limemini`
 - :doc:`/sdr/adalmpluto`
 - :doc:`/sdr/usrpB210`
+- :doc:`/sdr/rtl-sdr`
 
 
 Tools
@@ -46,6 +47,7 @@ Examples
    /sdr/limemini
    /sdr/adalmpluto
    /sdr/usrpB210
+   /sdr/rtl-sdr
 
    /tools/raspberrypi
    gnuradio
