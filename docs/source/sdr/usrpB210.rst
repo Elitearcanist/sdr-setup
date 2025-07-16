@@ -167,4 +167,7 @@ Most of these can also be adjusted in the FFT window.
 
 Running the command will make an FFT in the console window!
 
-.. image:: images/usrpFFT.png
+.. image:: ../images/usrpB210/usrpFFT.png
+
+.. steps for SoapSDR
+.. https://www.reddit.com/r/embedded/comments/1jhdhjc/cant_get_usrp_b210_offbrand_working_on_raspberry/

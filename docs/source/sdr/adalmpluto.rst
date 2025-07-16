@@ -14,7 +14,7 @@ the box that the SDR came in should have with a cable.
 Otherwise most micro USB cables will work.
 From their wiki:
 
-.. image:: images/plutoStart.png
+.. image:: ../images/adalmPluto/plutoStart.png
 
 Opening the info.html file in the Pluto's storage device
 will display instructions for upgrading firmware,
@@ -30,7 +30,7 @@ Firmware
 To upgrade the firmware, use the info.html page to download
 the latest version of the firmware. It will look like this:
 
-.. image:: images/plutoFirmwareDownload.png
+.. image:: ../images/adalmPluto/plutoFirmwareDownload.png
 
 Follow the link to the online documentation on upgrading firmware.
 From that page:
@@ -46,7 +46,7 @@ The process takes about a minute and then the PlutoSDR will appear
 again as a storage device. If successful the new info.html page will
 display this under the firmware section:
 
-.. image:: images/plutoFirmwareSuccess.png
+.. image:: ../images/adalmPluto/plutoFirmwareSuccess.png
 
 The firmware is now up to date!
 
@@ -118,5 +118,29 @@ The command should produce something similar to:
     ...
 
 If the commands produce these outputs then the Adalm Pluto is properly setup!
+
+
+SoapySDR Setup
+---------------------
+To use SoapySDR on the Adalm Pluto the correct module needs to be installed.
+The module's code can be found on their `github <https://github.com/pothosware/SoapyPlutoSDR>`_.
+Running the following will build and install the Pluto SoapySDR module.
+
+.. code-block:: console
+
+    git clone https://github.com/pothosware/SoapyPlutoSDR
+
+    cd SoapyPlutoSDR
+
+    mkdir build
+
+    cd build
+
+    cmake ..
+
+    make
+
+    sudo make install
+
 
 .. _ADALM-PLUTO Overview [Analog Devices Wiki]: https://wiki.analog.com/university/tools/pluto
