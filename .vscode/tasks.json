@@ -13,7 +13,9 @@
                 "-lm",
                 "-Ofast",
                 "-o",
-                "${fileDirname}/limeRadar.out"
+                "${fileDirname}/limeRadar.out",
+                "-L",
+                "/usr/local/lib"
             ],
             "options": {
                 "cwd": "${fileDirname}"
