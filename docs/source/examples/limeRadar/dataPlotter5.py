@@ -1,6 +1,16 @@
 # Written by Levi Powell, August 2023, edited by Andrew McDonald July 2025
 # This code plots the data saved by the SDR
 
+"""TODO:
+1. see if empty data can be collected at end of buffer, remove trailing zeros
+https://github.com/righthalfplane/rfspace/blob/master/universalSend.cpp
+https://discourse.myriadrf.org/t/soapysdr-read-stream-samples-lost/8014
+
+2. Improve data plotter
+https://scholarsarchive.byu.edu/cgi/viewcontent.cgi?article=10036&context=etd
+https://github.com/kohlsne/LimeSDR_LFMCW_Radar/blob/main/main.cpp
+https://github.com/kohlsne/LimeSDR_LFMCW_Radar/blob/main/MatlabScripts/ProcessDataMethod3.m
+"""
 
 import time
 import array
