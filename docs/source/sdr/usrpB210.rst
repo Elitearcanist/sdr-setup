@@ -46,9 +46,9 @@ Navigate to a new directory and clone the repository using:
 
     git clone https://github.com/EttusResearch/uhd.git
 
-By default it will be on the master branch which is the most up to date
-version of the software. If a specific version is desired switching branches
-will accomplish this (don't forget to navigate to the repo directory):
+By default, it will be on the master branch, which is the most up to date
+version of the software. If a specific version is desired, switching branches
+will accomplish this. Navigate to the repo directory and run:
 
 .. code-block:: console
 
@@ -77,7 +77,8 @@ using the following commands (this will take some time):
 
     make
     make test # This step is optional
-    sudo make install
+    sudo make install # This will install to /usr/local
+    sudo ldconfig
 
 
 USB Transport (LibUSB)
@@ -141,6 +142,27 @@ USRP B210. It list information about the connected device.
     |   |   Sensors: gps_gpgga, gps_gprmc, gps_time, gps_locked, gps_servo, ref_locked
     ...
 
+If an error like the following appears:
+
+.. code-block:: console
+
+    [INFO] [UHD] linux; GNU C++ version 13.3.0; Boost_108300; UHD_4.8.0.0-266-g50967d13
+    [WARNING] [B200] EnvironmentError: IOError: Could not find path for image: usrp_b200_fw.hex
+
+    Using images directory: <no images directory located>
+
+    Set the environment variable 'UHD_IMAGES_DIR' appropriately or follow the below instructions to download the images package.
+
+    Please run:
+
+    "/usr/local/lib/uhd/utils/uhd_images_downloader.py"
+    Error: LookupError: KeyError: No devices found for ----->
+    Empty Device Address
+
+Then download UHD images by running :code:`sudo uhd_images_downloader`.
+Try rerunning :code:`uhd_usrp_probe` after the UHD images are finished downloading.
+
+
 Console FFT
 ^^^^^^^^^^^^^^^^
 
@@ -156,12 +178,13 @@ When the terminal is in the examples directory. The FFT can be started with:
     ./rx_ascii_art_dft --freq 915e6 --rate 5e6 --gain 20 --bw 5e6 --ref-lvl -30
 
 The tags specify the traits of the FFT:
- - :code:`--freq` specifies the center frequency. 915e6 sets it to 915 MHz.
- - :code:`--rate` sets the sample rate.
- - :code:`--gain` sets the gain of the receiver.
- - :code:`--bw` sets the bandwidth, this is how wide it will scan frequencies
-   around the center frequency.
- - :code:`--ref-lvl` is the level it will set the maximum amplitude in dBfs.
+
+--freq      specifies the center frequency. 915e6 sets it to 915 MHz.
+-rate       sets the sample rate.
+--gain      sets the gain of the receiver.
+--bw        sets the bandwidth, this is how wide it will scan frequencies
+            around the center frequency.
+--ref-lvl   is the level it will set the maximum amplitude in dBfs.
 
 Most of these can also be adjusted in the FFT window.
 
@@ -169,5 +192,8 @@ Running the command will make an FFT in the console window!
 
 .. image:: ../images/usrpB210/usrpFFT.png
 
+Press `q` to close the console window.
+
 .. steps for SoapSDR
+.. https://github.com/pothosware/SoapyUHD/wiki
 .. https://www.reddit.com/r/embedded/comments/1jhdhjc/cant_get_usrp_b210_offbrand_working_on_raspberry/

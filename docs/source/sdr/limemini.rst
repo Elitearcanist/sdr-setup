@@ -1,13 +1,18 @@
 Lime Mini
-============
+==============
+
+.. image:: ../images/LimeMini/limes.jpg
 
 Hardware setup
 --------------------
-Use of an ESD strap while handling the Lime mini is recommended
-to avoid damage to the device.
+Connect the Lime mini to the computer through a USB port.
 
-Additionally, a connector saver/short extension cable will make
-it harder to damage the USB port.
+.. tip::
+    Use of an ESD strap while handling the Lime mini is recommended
+    to avoid damage to the device.
+
+    Additionally, a connector saver/short extension cable will make
+    it harder to damage the USB port.
 
 Software setup
 ---------------------
