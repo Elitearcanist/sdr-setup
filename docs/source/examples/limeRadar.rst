@@ -45,3 +45,15 @@ Below is the shell script.
 
     echo $YEL[RUNNER] Plotting with $PLOTTING_FILE ...$NC
     python3 $PLOTTING_FILE
+
+
+-L $LIB_DIR
+    is where the soapySDR library is installed. The :code:`-L` command
+    passes a specific location to search in. It is configured through the
+    :code:`LIB_DIR` variable. It may not be necessary to include.
+EXE_FILE
+    is the file the compiler outputs.
+CODE_FILE
+    the name of the radar file.
+PLOTTING_FILE
+    the name of the data plotter file.
