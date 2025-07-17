@@ -23,34 +23,35 @@ a how to use an SDR for a special use case.
 
 Software Defined Radios
 -----------------------
-- :doc:`/limemini`
-- :doc:`/limesdr`
-- :doc:`/adalmpluto`
+- :doc:`/sdr/limemini`
+- :doc:`/sdr/adalmpluto`
+- :doc:`/sdr/usrpB210`
+- :doc:`/sdr/rtl-sdr`
 
-Special Environments
+
+Tools
 -----------------------
-- :doc:`/raspberrypi`
+- :doc:`/tools/raspberrypi`
 - :doc:`/gnuradio`
+- :doc:`/tools/soapySDR`
 
 Examples
 ----------------------
 - :doc:`/examples/radio`
-- :doc:`/examples/radar`
+- :doc:`/examples/limeRadar`
 
-
-Contents
-----------------------
 
 .. toctree::
-   :maxdepth: 2
+   :hidden:
 
-   usage
-   limemini
-   limesdr
-   adalmpluto
+   /sdr/limemini
+   /sdr/adalmpluto
+   /sdr/usrpB210
+   /sdr/rtl-sdr
 
-   raspberrypi
+   /tools/raspberrypi
    gnuradio
+   /tools/soapySDR
 
    /examples/radio
-   /examples/radar
+   /examples/limeRadar

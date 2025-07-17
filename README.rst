@@ -3,6 +3,8 @@ SDR Setup
 
 This is the documentation for setting up a few SDRs on various systems.
 
+ReadtheDocs for sdr-setup is hosted on https://sdr-setup.readthedocs.io/en/latest/index.html
+
 Development
 ========================
 Create a new directory and clone the repository using the following command:
