@@ -26,7 +26,7 @@ adding -L /usr/local/lib to the compile command helped it find the correct Soapy
 
 /////////// User configuration constants ///////////
 #define FREQUENCY 3e9                // The carrier frequency (Hz)
-#define CLOCK_RATE 50e6              // SDR internal clock rate (Hz)
+#define CLOCK_RATE 16e6              // SDR internal clock rate (Hz)
 #define SAMPLE_RATE_TX CLOCK_RATE    // SDR sample rate (Hz)
 #define SAMPLE_RATE_RX CLOCK_RATE    // SDR sample rate (Hz)
 #define NUM_CHIRPS 20                // Number of chirps to be transmitted
@@ -42,8 +42,8 @@ adding -L /usr/local/lib to the compile command helped it find the correct Soapy
 
 // Note: the target length will be achieved by using the getSreamMTU length and using MTUs until the target is achieved
 // an additional buffer is added to be trimmed later to remove trailing zeros
-#define CONTIGUOUS_BUFF_TX_LENGTH_TARGET (int)1e6 // Target Length of a single chirp will be slightly larger
-#define CONTIGUOUS_BUFF_RX_LENGTH_TARGET (int)1e6 // Target Length of a single chirp
+#define CONTIGUOUS_BUFF_TX_LENGTH_TARGET (int)1e5 // Target Length of a single chirp will be slightly larger
+#define CONTIGUOUS_BUFF_RX_LENGTH_TARGET (int)1e5 // Target Length of a single chirp
 
 #define CHANNEL_TX 0 // SDR channel
 #define CHANNEL_RX 0 // SDR channel
@@ -55,8 +55,8 @@ adding -L /usr/local/lib to the compile command helped it find the correct Soapy
 
 #define CHIRP_BANDWIDTH SAMPLE_RATE_RX // Bandwidth of a chirp
 
-#define GAIN 60    // Default is 50 max is 52
-#define RX_GAIN 40 // Default was 20
+#define GAIN 50    // Default is 50 max is 89.75
+#define RX_GAIN 20 // Default was 20 max is 76
 
 #define PI 3.1415926535
 
@@ -311,7 +311,7 @@ void DeviceInfo(struct SoapySDRDevice *sdr)
     printf("\n");
     SoapySDRStrings_clear(&names, length);
 
-    SoapySDRRange *ranges = SoapySDRDevice_getFrequencyRange(sdr, SOAPY_SDR_RX, CHANNEL_TX, &length);
+    SoapySDRRange *ranges = SoapySDRDevice_getFrequencyRange(sdr, SOAPY_SDR_RX, CHANNEL_RX, &length);
     printf("[DeviceInfo] Rx freq ranges: ");
     for (size_t i = 0; i < length; i++)
         printf("[%g Hz -> %g Hz], ", ranges[i].minimum, ranges[i].maximum);
@@ -324,6 +324,21 @@ void DeviceInfo(struct SoapySDRDevice *sdr)
         printf("Key: %s, Value: %s, Desc: %s], ", args[i].key, args[i].value, args[i].description);
     printf("\n");
     free(args);
+
+    bool automaticEnabled = SoapySDRDevice_getIQBalanceMode(sdr, SOAPY_SDR_RX, CHANNEL_RX);
+    printf("[DeviceInfo] Automatic IQ Balance is %s\n", automaticEnabled ? "enabled." : "NOT enabled.");
+
+    automaticEnabled = SoapySDRDevice_getDCOffsetMode(sdr, SOAPY_SDR_RX, CHANNEL_RX);
+    printf("[DeviceInfo] Automatic DC Offset is %s\n", automaticEnabled ? "enabled." : "NOT enabled.");
+
+    char **clockSources = SoapySDRDevice_listClockSources(sdr, &length);
+    printf("[DeviceInfo] Clock Sources: ");
+    for (size_t i = 0; i < length; i++)
+        printf("%s, ", clockSources[i]);
+    printf("\n");
+    free(clockSources);
+
+    printf("[DeviceInfo] Clock Source: %s\n", SoapySDRDevice_getClockSource(sdr));
 }
 
 void SetParameters(SoapySDRDevice *sdr)
@@ -357,10 +372,10 @@ void SetParameters(SoapySDRDevice *sdr)
     {
         printf("[SetParameters] Tx setFrequency fail: %s\n", SoapySDRDevice_lastError());
     }
-    if (SoapySDRDevice_setBandwidth(sdr, SOAPY_SDR_TX, CHANNEL_TX, BANDWIDTH_TX) != 0)
-    {
-        printf("[SetParameters] Tx setBandwidth fail: %s\n", SoapySDRDevice_lastError());
-    }
+    // if (SoapySDRDevice_setBandwidth(sdr, SOAPY_SDR_TX, CHANNEL_TX, BANDWIDTH_TX) != 0)
+    // {
+    //     printf("[SetParameters] Tx setBandwidth fail: %s\n", SoapySDRDevice_lastError());
+    // }
 
     // Setup Rx parameters
     if (SoapySDRDevice_setSampleRate(sdr, SOAPY_SDR_RX, CHANNEL_RX, SAMPLE_RATE_RX) != 0)
@@ -379,9 +394,14 @@ void SetParameters(SoapySDRDevice *sdr)
     {
         printf("[SetParameters] Rx setFrequency fail: %s\n", SoapySDRDevice_lastError());
     }
-    if (SoapySDRDevice_setBandwidth(sdr, SOAPY_SDR_RX, CHANNEL_RX, BANDWIDTH_RX) != 0)
+    // if (SoapySDRDevice_setBandwidth(sdr, SOAPY_SDR_RX, CHANNEL_RX, BANDWIDTH_RX) != 0)
+    // {
+    //     printf("[SetParameters] Rx setBandwidth fail: %s\n", SoapySDRDevice_lastError());
+    // }
+
+    if (SoapySDRDevice_setIQBalanceMode(sdr, SOAPY_SDR_RX, CHANNEL_RX, true) != 0)
     {
-        printf("[SetParameters] Rx setBandwidth fail: %s\n", SoapySDRDevice_lastError());
+        printf("[SetParameters] Rx setIQBalanceMode fail: %s\n", SoapySDRDevice_lastError());
     }
 }
 
@@ -408,14 +428,14 @@ SoapySDRStream *MakeStream(SoapySDRDevice *sdr, const int direction)
     // If on transmit set the send_frame_size, on recieve set the recv_frame_size
     if (direction == 0)
     {
-        if (SoapySDRKwargs_set(&args, "num_send_frames", "64") != 0)
+        if (SoapySDRKwargs_set(&args, "num_send_frames", "32") != 0)
         {
             printf("[MakeStream] num_send_frames allocation failed!\n");
         }
     }
     else
     {
-        if (SoapySDRKwargs_set(&args, "num_recv_frames", "64") != 0)
+        if (SoapySDRKwargs_set(&args, "num_recv_frames", "32") != 0)
         {
             printf("[MakeStream] num_recv_frames allocation failed!\n");
         }
