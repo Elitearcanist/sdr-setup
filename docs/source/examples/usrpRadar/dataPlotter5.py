@@ -20,8 +20,8 @@ from numpy.fft import fft
 from numpy.fft import fftshift
 
 f_config_name = "radarConfig.txt"
-f_data_name = "radarData.bin"
-f_nulldata_name = "radarNullData.bin"
+f_data_name = "pythonData.bin"
+f_nulldata_name = "pythonNullData.bin"
 window = True  # apply a hanning window to the data, the FFT won't work without a window applied!
 fftLength = 100
 intData = False
@@ -285,46 +285,10 @@ plt.ylabel("Chirp Number")
 del FFTMagMatrixDiff
 del realMatrixDiff
 
-# plt.show()
+plt.show()
 
 
 f_config.close()
 f_nulldata.close()
 f_data.close()
 print("Done")
-
-
-# Chirp Constants
-length = 114240
-sampleRt = 28e6
-
-chirpsPerSec: float = (
-    sampleRt / length
-)  # Enough to have one chirp in the contiguous buffer.
-chirpStartFreq: int = 0
-chirpEndFreq: int = sampleRt
-chirpSlope: np.float64 = np.float64((chirpEndFreq - chirpStartFreq) * chirpsPerSec)
-
-buff = np.empty([length], np.csingle)
-
-# Generate the up-chirp
-for i in range(length):
-    t = np.float64(i / sampleRt)
-    angle = (2 * np.pi * t) * (chirpStartFreq + t * chirpSlope / 2)
-    buff[i] = np.cos(angle) + np.sin(angle) * 1j
-
-
-plt.figure(3)
-plt.subplot(subplot1 + 1)
-plot = plt.plot(range(length), np.float64(buff.real))
-plt.title("Real")
-plt.xlabel("Time")
-plt.ylabel("Amplitude")
-
-plt.subplot(subplot1 + 2)
-plot = plt.plot(range(length), np.float64(buff.imag))
-plt.title("Imaginary")
-plt.xlabel("Time")
-plt.ylabel("Amplitude")
-
-plt.show()

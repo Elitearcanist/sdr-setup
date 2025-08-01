@@ -26,7 +26,7 @@ adding -L /usr/local/lib to the compile command helped it find the correct Soapy
 
 /////////// User configuration constants ///////////
 #define FREQUENCY 3e9                // The carrier frequency (Hz)
-#define CLOCK_RATE 16e6              // SDR internal clock rate (Hz)
+#define CLOCK_RATE 56e6              // SDR internal clock rate (Hz)
 #define SAMPLE_RATE_TX CLOCK_RATE    // SDR sample rate (Hz)
 #define SAMPLE_RATE_RX CLOCK_RATE    // SDR sample rate (Hz)
 #define NUM_CHIRPS 20                // Number of chirps to be transmitted
@@ -37,16 +37,16 @@ adding -L /usr/local/lib to the compile command helped it find the correct Soapy
 // Note: if the zero delay is off from the actual delay inside the FPGA then the feedthough will not be centered in the FFT
 #define ZERO_DELAY_SAMPLES 0 // Constant internal latency correction, orignially 96
 
-#define BANDWIDTH_TX 50e6 // Bandwidth of frontend filters
-#define BANDWIDTH_RX 50e6 // Bandwidth of frontend filters
+#define BANDWIDTH_TX SAMPLE_RATE_TX // Bandwidth of frontend filters
+#define BANDWIDTH_RX SAMPLE_RATE_RX // Bandwidth of frontend filters
 
 // Note: the target length will be achieved by using the getSreamMTU length and using MTUs until the target is achieved
 // an additional buffer is added to be trimmed later to remove trailing zeros
 #define CONTIGUOUS_BUFF_TX_LENGTH_TARGET (int)1e5 // Target Length of a single chirp will be slightly larger
 #define CONTIGUOUS_BUFF_RX_LENGTH_TARGET (int)1e5 // Target Length of a single chirp
 
-#define CHANNEL_TX 0 // SDR channel
-#define CHANNEL_RX 0 // SDR channel
+#define CHANNEL_TX 1 // SDR channel
+#define CHANNEL_RX 1 // SDR channel
 
 #define STREAM_TIMEOUT_TX 1e6                              // Stream timeout (microseconds)
 #define STREAM_TIMEOUT_RX 1e6                              // Stream timeout (microseconds)
@@ -56,7 +56,7 @@ adding -L /usr/local/lib to the compile command helped it find the correct Soapy
 #define CHIRP_BANDWIDTH SAMPLE_RATE_RX // Bandwidth of a chirp
 
 #define GAIN 50    // Default is 50 max is 89.75
-#define RX_GAIN 20 // Default was 20 max is 76
+#define RX_GAIN 30 // Default was 20 max is 76
 
 #define PI 3.1415926535
 
@@ -69,7 +69,6 @@ void MakeBuffer(SoapySDRDevice *sdr, SoapySDRStream *stream, complex float *buff
 void SaveData(FILE *fp, int *sampleNumber, const complex float *buffer, const int length, const bool saveToFile);
 void FillBuffer(complex float *buff, size_t length, size_t contBufferTxLength, size_t bufferTxLength);
 void TransmitReceive(SoapySDRDevice *sdr, SoapySDRStream *txStream, SoapySDRStream *rxStream, complex float *bufferTx, complex float *bufferRx, complex float *contBufferTx, complex float *contBufferRx, long long transmitTime, long long receiveTime, int *firstSampleIndex, const size_t contBufferTxLength, const size_t contBufferRxLength, const size_t bufferTxLength, const size_t bufferRxLength);
-void TrimBuffer(complex float *contBufferRx, int firstSampleIndex, size_t contBufferRxLengt);
 void MixSignals(complex float *contBufferTx, complex float *contBufferRx, complex float *mixedSignal, const size_t contBufferRxLength);
 
 int main()
@@ -109,7 +108,7 @@ int main()
 
     ///// Make Rx Buffer /////
     size_t contBufferRxLength; // The full length of the contiguous Rx buffer
-    size_t bufferRxLength;     // length of one Rx Maximum Transfer Unit
+    size_t bufferRxLength;     // Length of one Rx Maximum Transfer Unit
 
     complex float *contBufferRx;
     MakeBuffer(sdr, rxStream, contBufferRx, &contBufferRxLength, &bufferRxLength, CONTIGUOUS_BUFF_RX_LENGTH_TARGET);
@@ -123,9 +122,6 @@ int main()
         contBufferRx[i] = -1 - 1 * I;
     }
 
-    // The shorter length of the saved RX data, the full contiguous buffer length minus one MTU
-    size_t contBufferRxSaveLength = contBufferRxLength - bufferRxLength;
-
     // Load constants into configuration file
     if (fp_config == NULL)
     {
@@ -133,7 +129,7 @@ int main()
     }
     else
     {
-        fprintf(fp_config, "%d,%d,%d,%d,%d\n", (int)SAMPLE_RATE_RX, (int)CHIRP_BANDWIDTH, (int)contBufferRxSaveLength, (int)NUM_CHIRPS, (int)CHIRP_DELAY);
+        fprintf(fp_config, "%d,%d,%d,%d,%d\n", (int)SAMPLE_RATE_RX, (int)CHIRP_BANDWIDTH, (int)contBufferRxLength, (int)NUM_CHIRPS, (int)CHIRP_DELAY);
     }
 
     // Allocate a buffer to hold the mixed data
@@ -172,11 +168,6 @@ int main()
 
         TransmitReceive(sdr, txStream, rxStream, bufferTx, bufferRx, contBufferTx, contBufferRx, transmitTime, receiveTime, &firstSampleIndex, contBufferTxLength, contBufferRxLength, bufferTxLength, bufferRxLength);
 
-        // Remove garbage values from the beginning of the contiguous buffer
-        long long startCleanTime = SoapySDRDevice_getHardwareTime(sdr, timeSource);
-        TrimBuffer(contBufferRx, firstSampleIndex, contBufferRxLength);
-        long long endCleanTime = SoapySDRDevice_getHardwareTime(sdr, timeSource);
-
         // Mix Tx/Rx signals
         long long startMixTime = SoapySDRDevice_getHardwareTime(sdr, timeSource);
         MixSignals(contBufferTx, contBufferRx, mixedSignal, contBufferRxLength);
@@ -184,13 +175,12 @@ int main()
 
         // Save data to file
         long long startSaveTime = SoapySDRDevice_getHardwareTime(sdr, timeSource);
-        SaveData(fp_nulldata, &sampleNumber, mixedSignal, contBufferRxSaveLength, SAVE_TO_FILE); // Note: contBufferRxSaveLength is shorter to trim off ending zeros
+        SaveData(fp_nulldata, &sampleNumber, mixedSignal, contBufferRxLength, SAVE_TO_FILE);
         long long endSaveTime = SoapySDRDevice_getHardwareTime(sdr, timeSource);
 
         bufferTx = contBufferTx;
         bufferRx = contBufferRx;
 
-        printf("\tTime to clean signal: %lf s\n", (endCleanTime - startCleanTime) / 1.0e9);
         printf("\tTime to mix signals: %lf s\n", (endMixTime - startMixTime) / 1.0e9);
         printf("\tTime to save data to file: %lf s\n", (endSaveTime - startSaveTime) / 1.0e9);
 
@@ -216,11 +206,6 @@ int main()
 
         TransmitReceive(sdr, txStream, rxStream, bufferTx, bufferRx, contBufferTx, contBufferRx, transmitTime, receiveTime, &firstSampleIndex, contBufferTxLength, contBufferRxLength, bufferTxLength, bufferRxLength);
 
-        // Remove garbage values from the beginning of the contiguous buffer
-        long long startCleanTime = SoapySDRDevice_getHardwareTime(sdr, timeSource);
-        TrimBuffer(contBufferRx, firstSampleIndex, contBufferRxLength);
-        long long endCleanTime = SoapySDRDevice_getHardwareTime(sdr, timeSource);
-
         // Mix Tx/Rx signals
         long long startMixTime = SoapySDRDevice_getHardwareTime(sdr, timeSource);
         MixSignals(contBufferTx, contBufferRx, mixedSignal, contBufferRxLength);
@@ -228,13 +213,12 @@ int main()
 
         // Save data to file
         long long startSaveTime = SoapySDRDevice_getHardwareTime(sdr, timeSource);
-        SaveData(fp_data, &sampleNumber, mixedSignal, contBufferRxSaveLength, SAVE_TO_FILE); // Note: contBufferRxSaveLength is shorter to trim off ending zeros
+        SaveData(fp_data, &sampleNumber, mixedSignal, contBufferRxLength, SAVE_TO_FILE);
         long long endSaveTime = SoapySDRDevice_getHardwareTime(sdr, timeSource);
 
         bufferTx = contBufferTx;
         bufferRx = contBufferRx;
 
-        printf("\tTime to clean signal: %lf s\n", (endCleanTime - startCleanTime) / 1.0e9);
         printf("\tTime to mix signals: %lf s\n", (endMixTime - startMixTime) / 1.0e9);
         printf("\tTime to save data to file: %lf s\n", (endSaveTime - startSaveTime) / 1.0e9);
 
@@ -398,18 +382,57 @@ void SetParameters(SoapySDRDevice *sdr)
     // {
     //     printf("[SetParameters] Rx setBandwidth fail: %s\n", SoapySDRDevice_lastError());
     // }
-
-    if (SoapySDRDevice_setIQBalanceMode(sdr, SOAPY_SDR_RX, CHANNEL_RX, true) != 0)
-    {
-        printf("[SetParameters] Rx setIQBalanceMode fail: %s\n", SoapySDRDevice_lastError());
-    }
 }
 
 SoapySDRStream *MakeStream(SoapySDRDevice *sdr, const int direction)
 {
+    SoapySDRKwargs args = {};
+    // define the bus format to signed complex 16
+    if (SoapySDRKwargs_set(&args, "WIRE", "sc16") != 0)
+    {
+        printf("[MakeStream] WIRE allocation failed!\n");
+    }
+    // // Set the samples per packet manually to see if it helps
+    // if (SoapySDRKwargs_set(&args, "spp", "200") != 0)
+    // {
+    //     printf("[MakeStream] spp allocation failed!\n");
+    // }
+
+    // If on transmit set the send_frame_size, on recieve set the recv_frame_size
+    if (direction == 0)
+    {
+        // Args for the TX stream
+        if (SoapySDRKwargs_set(&args, "num_send_frames", "64") != 0)
+        {
+            printf("[MakeStream] num_send_frames allocation failed!\n");
+        }
+        if (SoapySDRKwargs_set(&args, "underflow_policy", "next_packet") != 0)
+        {
+            printf("[MakeStream] underflow_policy allocation failed!\n");
+        }
+    }
+    else
+    {
+        // Args for the RX stream
+        if (SoapySDRKwargs_set(&args, "num_recv_frames", "64") != 0)
+        {
+            printf("[MakeStream] num_recv_frames allocation failed!\n");
+        }
+    }
+
+    // Create a stream
+    const size_t channel = direction ? CHANNEL_TX : CHANNEL_RX; // Make a variable to be pointed to instead of automatic
+    SoapySDRStream *stream = SoapySDRDevice_setupStream(sdr, direction, SOAPY_SDR_CF32, &channel, 1, &args);
+    if (stream == NULL)
+    {
+        printf("[MakeStream] Setup stream fail: %s\n", SoapySDRDevice_lastError());
+    }
+    SoapySDRKwargs_clear(&args); // remove the created args
+
+    // After setting up the stream, see if changes took place
     // Print stream arguements to see possible configuration options
     size_t length;
-    SoapySDRArgInfo *streamArgs = SoapySDRDevice_getStreamArgsInfo(sdr, direction, (size_t)0, &length);
+    SoapySDRArgInfo *streamArgs = SoapySDRDevice_getStreamArgsInfo(sdr, direction, channel, &length);
     printf("[MakeStream] Stream Settings: \n");
     for (size_t i = 0; i < length; i++)
     {
@@ -421,33 +444,6 @@ SoapySDRStream *MakeStream(SoapySDRDevice *sdr, const int direction)
         printf("\n");
     }
     free(streamArgs);
-
-    SoapySDRKwargs args = {};
-    SoapySDRKwargs_set(&args, "WIRE", "sc16"); // define the bus format to signed complex 16
-
-    // If on transmit set the send_frame_size, on recieve set the recv_frame_size
-    if (direction == 0)
-    {
-        if (SoapySDRKwargs_set(&args, "num_send_frames", "32") != 0)
-        {
-            printf("[MakeStream] num_send_frames allocation failed!\n");
-        }
-    }
-    else
-    {
-        if (SoapySDRKwargs_set(&args, "num_recv_frames", "32") != 0)
-        {
-            printf("[MakeStream] num_recv_frames allocation failed!\n");
-        }
-    }
-
-    // Create a stream
-    SoapySDRStream *stream = SoapySDRDevice_setupStream(sdr, direction, SOAPY_SDR_CF32, NULL, 0, &args);
-    if (stream == NULL)
-    {
-        printf("[MakeStream] Setup stream fail: %s\n", SoapySDRDevice_lastError());
-    }
-    SoapySDRKwargs_clear(&args); // remove the created args
 
     return stream;
 }
@@ -518,12 +514,12 @@ void FillBuffer(complex float *buff, size_t length, size_t contBufferTxLength, s
     printf("[Fill Buffer] Filling buffer\n");
 
     // Chirp Constants
-    float chirpsPerSec = ((float)SAMPLE_RATE_TX) / contBufferTxLength; // Enough to have one chirp in the contiguous buffer.
-    int chirpStartFreq = 0;
-    int chirpEndFreq = CHIRP_BANDWIDTH;
-    double chirpSlope = (chirpEndFreq - chirpStartFreq) * chirpsPerSec;
+    const double chirpsPerSec = ((float)SAMPLE_RATE_TX) / (float)contBufferTxLength; // Enough to have one chirp in the contiguous buffer.
+    const int chirpStartFreq = 0;
+    const int chirpEndFreq = CHIRP_BANDWIDTH;
+    const double chirpSlope = (chirpEndFreq - chirpStartFreq) * chirpsPerSec;
 
-    printf("Chirp data:\n chirps per second: %f, chip slope %lf\n", chirpsPerSec, chirpSlope);
+    printf("[FillBuffer] Chirp data:\n chirps per second: %f, chip slope %lf\n", chirpsPerSec, chirpSlope);
 
     // Generate the up-chirp
     for (int i = 0; i < length; i++)
@@ -564,7 +560,7 @@ void TransmitReceive(SoapySDRDevice *sdr, SoapySDRStream *txStream, SoapySDRStre
     for (int i = 0; i < numTxBuffers; i++)
     {
         // If it is the last transmission change flags to empty buffer
-        if (i == numTxBuffers)
+        if (i == numTxBuffers - 1)
         {
             flags = FLAGS_END;
         }
@@ -619,22 +615,6 @@ void TransmitReceive(SoapySDRDevice *sdr, SoapySDRStream *txStream, SoapySDRStre
         }
     }
     // printf("[TransmitReceive] Rx timestamp: %f\n", firstRxTimestamp / 1e9);
-}
-
-void TrimBuffer(complex float *contBufferRx, int firstSampleIndex, size_t contBufferRxLength)
-{
-    printf("[TrimBuffer] Trimming first index to %d\n", firstSampleIndex);
-    for (int i = 0; i < contBufferRxLength; i++)
-    {
-        if (i < contBufferRxLength - firstSampleIndex)
-        {
-            contBufferRx[i] = contBufferRx[i + firstSampleIndex];
-        }
-        else
-        {
-            contBufferRx[i] = 0;
-        }
-    }
 }
 
 void MixSignals(complex float *contBufferTx, complex float *contBufferRx, complex float *mixedSignal, const size_t contBufferRxLength)

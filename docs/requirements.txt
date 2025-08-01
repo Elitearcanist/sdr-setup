@@ -6,3 +6,13 @@ esbonio==0.16.5
 # Linting
 rstcheck==6.2.4
 doc8==1.1.2
+
+# PySDR dependencies
+pybind11
+
+numpy==1.26.4
+docutils
+mako
+requests
+ruamel.yaml
+setuptools

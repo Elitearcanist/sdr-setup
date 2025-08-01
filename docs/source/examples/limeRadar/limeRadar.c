@@ -27,10 +27,10 @@ adding -L /usr/local/lib to the compile command helped it find the correct Soapy
 /////////// User configuration constants ///////////
 #define FREQUENCY 3e9                // The carrier frequency (Hz)
 #define CLOCK_RATE 100e6             // SDR internal clock rate (Hz)
-#define SAMPLE_RATE_TX 29e6          // SDR sample rate (Hz)
-#define SAMPLE_RATE_RX 29e6          // SDR sample rate (Hz)
-#define NUM_CHIRPS 20                // Number of chirps to be transmitted
-#define CHIRP_DELAY (long long)0.1e9 // Time from start of one chirp to start of next chirp (nanoseconds)
+#define SAMPLE_RATE_TX 15e6          // SDR sample rate (Hz)
+#define SAMPLE_RATE_RX 15e6          // SDR sample rate (Hz)
+#define NUM_CHIRPS 50                // Number of chirps to be transmitted
+#define CHIRP_DELAY (long long)0.2e9 // Time from start of one chirp to start of next chirp (nanoseconds)
 #define SAVE_TO_FILE true            // Save data to file or print to screen
 
 ///// Other constants /////
