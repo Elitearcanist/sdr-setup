@@ -37,7 +37,7 @@ sampleRate = int(row[0])
 bandwidth = int(row[1])
 numSamples = int(row[2])
 numChirps = int(row[3])
-chirpDelay = int(row[4])
+chirpDelay = float(row[4])
 
 print(f"\tSample rate was set to {sampleRate / 1e6} MS/s")
 print(f"\tBandwidth was set to {bandwidth / 1e6} MHz")
